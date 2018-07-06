@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>iconfont图片使用技巧 · bigdeal&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180226 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180226 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/favicon.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >bigdeal&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">iconfont图片使用技巧</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>bigdeal's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            iconfont图片使用技巧
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/08/29</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="font-class引用"><a href="#font-class引用" class="headerlink" title="font-class引用"></a>font-class引用</h3><hr>
+<p>font-class是unicode使用方式的一种变种，主要是解决unicode书写不直观，语意不明确的问题。</p>
+<p>与unicode使用方式相比，具有如下特点：</p>
+<h5 id="1-兼容性良好，支持ie8-，及所有现代浏览器。"><a href="#1-兼容性良好，支持ie8-，及所有现代浏览器。" class="headerlink" title="1.兼容性良好，支持ie8+，及所有现代浏览器。"></a>1.兼容性良好，支持ie8+，及所有现代浏览器。</h5><h5 id="2-相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。"><a href="#2-相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。" class="headerlink" title="2.相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。"></a>2.相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。</h5><h5 id="3-因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。"><a href="#3-因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。" class="headerlink" title="3.因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。"></a>3.因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。</h5><h5 id="4-不过因为本质上还是使用的字体，所以多色图标还是不支持的。"><a href="#4-不过因为本质上还是使用的字体，所以多色图标还是不支持的。" class="headerlink" title="4.不过因为本质上还是使用的字体，所以多色图标还是不支持的。"></a>4.不过因为本质上还是使用的字体，所以多色图标还是不支持的。</h5><p>使用步骤如下：</p>
+<h4 id="第一步：引入项目下面生成的fontclass代码："><a href="#第一步：引入项目下面生成的fontclass代码：" class="headerlink" title="第一步：引入项目下面生成的fontclass代码："></a>第一步：引入项目下面生成的fontclass代码：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"./iconfont.css"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="第二步：挑选相应图标并获取类名，应用于页面："><a href="#第二步：挑选相应图标并获取类名，应用于页面：" class="headerlink" title="第二步：挑选相应图标并获取类名，应用于页面："></a>第二步：挑选相应图标并获取类名，应用于页面：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-nav-xxx"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>“iconfont”是你项目下的font-family。可以通过编辑项目查看，默认是”iconfont”。</em></p>
+<h2 id="symbol引用"><a href="#symbol引用" class="headerlink" title="symbol引用"></a>symbol引用</h2><hr>
+<p>这是一种全新的使用方式，应该说这才是未来的主流，也是平台目前推荐的用法。相关介绍可以参考这篇文章 这种用法其实是做了一个svg的集合，与另外两种相比具有如下特点：</p>
+<h5 id="1-支持多色图标了，不再受单色限制。"><a href="#1-支持多色图标了，不再受单色限制。" class="headerlink" title="1.支持多色图标了，不再受单色限制。"></a>1.支持多色图标了，不再受单色限制。</h5><h5 id="2-通过一些技巧，支持像字体那样，通过font-size-color来调整样式。"><a href="#2-通过一些技巧，支持像字体那样，通过font-size-color来调整样式。" class="headerlink" title="2.通过一些技巧，支持像字体那样，通过font-size,color来调整样式。"></a>2.通过一些技巧，支持像字体那样，通过font-size,color来调整样式。</h5><h5 id="3-兼容性较差，支持-ie9-及现代浏览器。"><a href="#3-兼容性较差，支持-ie9-及现代浏览器。" class="headerlink" title="3.兼容性较差，支持 ie9+,及现代浏览器。"></a>3.兼容性较差，支持 ie9+,及现代浏览器。</h5><h5 id="4-浏览器渲染svg的性能一般，还不如png。"><a href="#4-浏览器渲染svg的性能一般，还不如png。" class="headerlink" title="4.浏览器渲染svg的性能一般，还不如png。"></a>4.浏览器渲染svg的性能一般，还不如png。</h5><h5 id="使用步骤如下："><a href="#使用步骤如下：" class="headerlink" title="使用步骤如下："></a>使用步骤如下：</h5><h4 id="第一步：引入项目下面生成的symbol代码："><a href="#第一步：引入项目下面生成的symbol代码：" class="headerlink" title="第一步：引入项目下面生成的symbol代码："></a>第一步：引入项目下面生成的symbol代码：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./iconfont.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="第二步：加入通用css代码（引入一次就行）："><a href="#第二步：加入通用css代码（引入一次就行）：" class="headerlink" title="第二步：加入通用css代码（引入一次就行）："></a>第二步：加入通用css代码（引入一次就行）：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  .icon &#123;</span></span><br><span class="line"><span class="undefined">     width: 1em; height: 1em;</span></span><br><span class="line"><span class="undefined">     vertical-align: -0.15em;</span></span><br><span class="line"><span class="undefined">     fill: currentColor;</span></span><br><span class="line"><span class="undefined">     overflow: hidden;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="第三步：挑选相应图标并获取类名，应用于页面："><a href="#第三步：挑选相应图标并获取类名，应用于页面：" class="headerlink" title="第三步：挑选相应图标并获取类名，应用于页面："></a>第三步：挑选相应图标并获取类名，应用于页面：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">svg</span> <span class="attr">class</span>=<span class="string">"icon"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">use</span> <span class="attr">xlink:href</span>=<span class="string">"#icon-nav-xxx"</span>&gt;</span><span class="tag">&lt;/<span class="name">use</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="unicode引用"><a href="#unicode引用" class="headerlink" title="unicode引用"></a>unicode引用</h2><hr>
+<p>unicode是字体在网页端最原始的应用方式，特点是：</p>
+<h5 id="1-兼容性最好，支持ie6-，及所有现代浏览器。"><a href="#1-兼容性最好，支持ie6-，及所有现代浏览器。" class="headerlink" title="1.兼容性最好，支持ie6+，及所有现代浏览器。"></a>1.兼容性最好，支持ie6+，及所有现代浏览器。</h5><h5 id="2-支持按字体的方式去动态调整图标大小，颜色等等。"><a href="#2-支持按字体的方式去动态调整图标大小，颜色等等。" class="headerlink" title="2.支持按字体的方式去动态调整图标大小，颜色等等。"></a>2.支持按字体的方式去动态调整图标大小，颜色等等。</h5><h5 id="3-但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。"><a href="#3-但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。" class="headerlink" title="3.但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。"></a>3.但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。</h5><p><em>注意：新版iconfont支持多色图标，这些多色图标在unicode模式下将不能使用，如果有需求建议使用symbol的引用方式</em></p>
+<h5 id="unicode使用步骤如下："><a href="#unicode使用步骤如下：" class="headerlink" title="unicode使用步骤如下："></a>unicode使用步骤如下：</h5><h4 id="第一步：拷贝项目下面生成的font-face"><a href="#第一步：拷贝项目下面生成的font-face" class="headerlink" title="第一步：拷贝项目下面生成的font-face"></a>第一步：拷贝项目下面生成的font-face</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@font-face &#123;</span><br><span class="line">    font-family: 'iconfont';</span><br><span class="line">    src: url('iconfont.eot');</span><br><span class="line">    src: url('iconfont.eot?#iefix') format('embedded-opentype'),</span><br><span class="line">    url('iconfont.woff') format('woff'),</span><br><span class="line">    url('iconfont.ttf') format('truetype'),</span><br><span class="line">    url('iconfont.svg#iconfont') format('svg');</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第二步：定义使用iconfont的样式"><a href="#第二步：定义使用iconfont的样式" class="headerlink" title="第二步：定义使用iconfont的样式"></a>第二步：定义使用iconfont的样式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.iconfont&#123;</span><br><span class="line">    font-family:"iconfont" !important;</span><br><span class="line">    font-size:16px;font-style:normal;</span><br><span class="line">    -webkit-font-smoothing: antialiased;</span><br><span class="line">    -webkit-text-stroke-width: 0.2px;</span><br><span class="line">    -moz-osx-font-smoothing: grayscale;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第三步：挑选相应图标并获取字体编码，应用于页面"><a href="#第三步：挑选相应图标并获取字体编码，应用于页面" class="headerlink" title="第三步：挑选相应图标并获取字体编码，应用于页面"></a>第三步：挑选相应图标并获取字体编码，应用于页面</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont"</span>&gt;</span>&amp;#x33;<span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>“iconfont”是你项目下的font-family。可以通过编辑项目查看，默认是”iconfont”。</em></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/09/21/BFC问题/" title= BFC >
+                    <div class="nextTitle">BFC</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2017/07/27/常用标签样式重置/" title= 标签样式重置 >
+                    <div class="prevTitle">标签样式重置</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    <!-- 
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:823719082@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/luwenchun" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+     -->
+    <div class="social">黑白中间还有灰，爱恨中间还有泪，你我之间还有谁？</div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#font-class引用"><span class="toc-number">1.</span> <span class="toc-text">font-class引用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-兼容性良好，支持ie8-，及所有现代浏览器。"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.兼容性良好，支持ie8+，及所有现代浏览器。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-不过因为本质上还是使用的字体，所以多色图标还是不支持的。"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.不过因为本质上还是使用的字体，所以多色图标还是不支持的。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步：引入项目下面生成的fontclass代码："><span class="toc-number">1.1.</span> <span class="toc-text">第一步：引入项目下面生成的fontclass代码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步：挑选相应图标并获取类名，应用于页面："><span class="toc-number">1.2.</span> <span class="toc-text">第二步：挑选相应图标并获取类名，应用于页面：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#symbol引用"><span class="toc-number"></span> <span class="toc-text">symbol引用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-支持多色图标了，不再受单色限制。"><span class="toc-number">0.0.1.</span> <span class="toc-text">1.支持多色图标了，不再受单色限制。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-通过一些技巧，支持像字体那样，通过font-size-color来调整样式。"><span class="toc-number">0.0.2.</span> <span class="toc-text">2.通过一些技巧，支持像字体那样，通过font-size,color来调整样式。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-兼容性较差，支持-ie9-及现代浏览器。"><span class="toc-number">0.0.3.</span> <span class="toc-text">3.兼容性较差，支持 ie9+,及现代浏览器。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-浏览器渲染svg的性能一般，还不如png。"><span class="toc-number">0.0.4.</span> <span class="toc-text">4.浏览器渲染svg的性能一般，还不如png。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用步骤如下："><span class="toc-number">0.0.5.</span> <span class="toc-text">使用步骤如下：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步：引入项目下面生成的symbol代码："><span class="toc-number">0.1.</span> <span class="toc-text">第一步：引入项目下面生成的symbol代码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步：加入通用css代码（引入一次就行）："><span class="toc-number">0.2.</span> <span class="toc-text">第二步：加入通用css代码（引入一次就行）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步：挑选相应图标并获取类名，应用于页面："><span class="toc-number">0.3.</span> <span class="toc-text">第三步：挑选相应图标并获取类名，应用于页面：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unicode引用"><span class="toc-number"></span> <span class="toc-text">unicode引用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-兼容性最好，支持ie6-，及所有现代浏览器。"><span class="toc-number">0.0.1.</span> <span class="toc-text">1.兼容性最好，支持ie6+，及所有现代浏览器。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-支持按字体的方式去动态调整图标大小，颜色等等。"><span class="toc-number">0.0.2.</span> <span class="toc-text">2.支持按字体的方式去动态调整图标大小，颜色等等。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。"><span class="toc-number">0.0.3.</span> <span class="toc-text">3.但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#unicode使用步骤如下："><span class="toc-number">0.0.4.</span> <span class="toc-text">unicode使用步骤如下：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步：拷贝项目下面生成的font-face"><span class="toc-number">0.1.</span> <span class="toc-text">第一步：拷贝项目下面生成的font-face</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步：定义使用iconfont的样式"><span class="toc-number">0.2.</span> <span class="toc-text">第二步：定义使用iconfont的样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步：挑选相应图标并获取字体编码，应用于页面"><span class="toc-number">0.3.</span> <span class="toc-text">第三步：挑选相应图标并获取字体编码，应用于页面</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 29 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/移动端300ms点击延迟和点击穿透/" >移动端300ms点击延迟和点击穿透</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/14/koa框架/" >从头实现一个koa框架</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/14</span><a class="archive-post-title" href= "/2018/06/14/新公司常见功能函数封装/" >新公司常见功能函数封装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/性能优化方式/" >性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/mongodb使用方法/" >mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span><a class="archive-post-title" href= "/2018/01/15/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2017/09/21/BFC问题/" >BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2017/07/27/常用标签样式重置/" >标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2017/06/20/Linux 基础命令/" >Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2017/05/13/Http/" >Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2017/03/23/CSS3动画/" >CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2017/02/01/BOM/" >BOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2017/01/20/DOM/" >DOM</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2016/12/12/事件/" >JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2016/11/20/JSON格式/" >JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2016/10/02/操作DOM常用API总结/" >DOM常见API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2016/10/02/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/21/简单实现VUE中的MVVM/" >简单实现VUE中的MVVM</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/10/02/基于Vue2.0实现后台系统权限控制/" >基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/10/27/基于gulp的前端脚手架/" >基于gulp的前端脚手架</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/05/25/与原生交互的常见方式/" >与原生交互的常见方式</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2016/06/30/Git 简单使用说明 /" >Git 简单使用说明</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/11/18/Javascript之闭包/" >JavaScript之闭包</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/08/29/iconfont字体图片/" >iconfont图片使用技巧</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Express中间件/" >Express中间件</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/02/27/vue组件之间的数据传递/" >vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/04/05/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2016/09/15/引用类型/" >引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2016/08/05/伪类、伪元素使用说明/" >伪类、伪元素使用说明</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
