@@ -326,79 +326,7 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/14/新公司常见功能函数封装/" >
-                
-                    <span>新公司常见功能函数封装</span>
-            </a>
-            <div class="abstract-content">
-                这些函数包括常见的业务函数和通用函数
-解决移动端300MS的点击延时，依赖fastClick更多查看：https://github.com/ftlabs/fastclick
-import FastClick from &apos;fastclick&apos;;
-(function(doc) {
-
-    if (&apos;addEventListener&apos; in doc) {
-    doc.addEventListener(&apos;DOMContentLoaded&apos;, function() {
-        FastClick.attach(doc.bod...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/14</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/25/与原生交互的常见方式/" >
-                
-                    <span>与原生交互的常见方式</span>
-            </a>
-            <div class="abstract-content">
-                
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/25</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/21/性能优化方式/" >
-                
-                    <span>性能优化</span>
-            </a>
-            <div class="abstract-content">
-                从服务渲染过程谈性能优化本文将结合从在浏览器输入url，到展示最终页面的过程来对其进行一步步分析，并将在web 中的实际应用实践进行总结。
-模式 1 - 前后分离从用户输入 url　到展示最终页面的过程，这种模式可简单的分为以下 5 部分
-1、用户输入 url，开始拉取静态页面2、静态页面加载完成后，解析文档标签，并开始拉取 CSS （一般 CSS 放于头部）3、接着拉取 JS 文件（一般 JS 文件放于尾部）4、当 JS 加载完成，便开始执行 JS 内容，发出请求并拿到数据5、将数据与资源渲染到页面上，得到最终展示效果
-具体流程图如下
-
-这种处理形式应该占据大多数，然而也很容易发现一个...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/21</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/21/简单实现VUE中的MVVM/" >
+            <a class="abstract-title" href = "/2018/06/20/简单实现VUE中的MVVM/" >
                 
                     <span>简单实现VUE中的MVVM</span>
             </a>
@@ -415,7 +343,7 @@ Object.defineProperty(object, &apos;test&apos;, {
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/21</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -425,28 +353,20 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/18/Express中间件/" >
+            <a class="abstract-title" href = "/2018/06/20/操作DOM常用API总结/" >
                 
-                    <span>Express中间件</span>
+                    <span>DOM常见API</span>
             </a>
             <div class="abstract-content">
-                中间件（Middleware） 是一个函数，它可以访问请求对象（request）, 响应对象（response）, 和 web 应用中处于请求-响应循环流程中的中间件(next)。
-中间件的功能包括：
-1、执行任何代码。
-2、修改请求和响应对象。
-3、终结请求-响应循环。
-4、调用堆栈中的下一个中间件.
-简单的说，中间件就是在请求-响应的过程中给我们提供一个可以修改内容的机会。
-看看express中如何使用中间件
-const express = require(&apos;express&apos;);
-const app = express();
-
-app.use((req, res,...
+                文本整理了javascript操作DOM的一些常用的api，根据其作用整理成为创建，修改，查询等多种类型的api，主要用于复习基础知识，加深对原生js的认识。
+基本概念在讲解操作DOM的api之前，首先我们来复习一下一些基本概念，这些概念是掌握api的关键，必须理解它们。
+Node类型DOM1级定义了一个Node接口，该接口由DOM中所有节点类型实现。这个Node接口在JS中是作为Node类型实现的。在IE9以下版本无法访问到这个类型，JS中所有节点都继承自Node类型，都共享着相同的基本属性和方法。
+Node有一个属性nodeType表示Node的类型，它是一个整数，其数值分别表示相应...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/18</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -456,42 +376,22 @@ app.use((req, res,...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/mongodb使用方法/" >
+            <a class="abstract-title" href = "/2018/06/20/性能优化方式/" >
                 
-                    <span>mongodb常用操作指令</span>
+                    <span>性能优化</span>
             </a>
             <div class="abstract-content">
-                1.创建简单mongodb服务器
-mongod --dbpath E:\MongoDB\db
+                从服务渲染过程谈性能优化本文将结合从在浏览器输入url，到展示最终页面的过程来对其进行一步步分析，并将在web 中的实际应用实践进行总结。
+模式 1 - 前后分离从用户输入 url　到展示最终页面的过程，这种模式可简单的分为以下 5 部分
+1、用户输入 url，开始拉取静态页面2、静态页面加载完成后，解析文档标签，并开始拉取 CSS （一般 CSS 放于头部）3、接着拉取 JS 文件（一般 JS 文件放于尾部）4、当 JS 加载完成，便开始执行 JS 内容，发出请求并拿到数据5、将数据与资源渲染到页面上，得到最终展示效果
+具体流程图如下
 
-mongo.exe
-
-
-2.数据库操作(CRUD)
-显示数据库名称：show dbs
-
-切换数据库：use &lt;dbname&gt;
-
-删除当前数据库：db.dropDatabase()
-
-想要新建数据库，直接使用use &lt;dbname&gt;,在需要的时候会自动创建
-
-新建表db.&lt;表名&gt;.insert({});数据以json的格式
-
-显示表名 ：show collections
-
-
-
-例子
-
-&gt; use exapmledb
-
-&gt; db.ex_collect...
+这种处理形式应该占据大多数，然而也很容易发现一个...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -501,25 +401,23 @@ mongo.exe
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/14/koa框架/" >
+            <a class="abstract-title" href = "/2018/06/20/引用类型/" >
                 
-                    <span>从头实现一个koa框架</span>
+                    <span>引用类型</span>
             </a>
             <div class="abstract-content">
-                看完之后甚是膜拜，决定收藏记录下，引用地址https://zhuanlan.zhihu.com/p/35040744
-笔者认为，理解koa，主要需要搞懂四条主线，其实也是实现koa的四个步骤，
-   分别是：
-1. 封装node http Server
-2. 构造resquest, response, context对象
-3. 中间件机制
-4. 错误处理
-主线一：封装node http Server: 从hello world说起首先，不考虑框架，如果使用原生http模块来实现一个返回hello world的后端app，代码如下：
-let http = require(&apos;htt...
+                在 ECMAScript 中，引用类型是一种数据结构，用于将数据和功能组织在一起。它也常被称作类。有时候也被成为对象定义，因为他们描述的是一类对象所具有的属性和方法。如前所述，对象是某个特定引用类型的实例。
+object 类型
+一般来说，访问对象属性有点表示法和方括号两种方法。
+
+12alert(person['name']) //'James'alert(person.name)    //'James'
+这两种方式访问对象属性没有任何区别，但方括号可以通过变量访问属性；如果属性明中国年包含空格等可能导致语法错误的字符，或者属性名使用的是关键字或保留字，也可以使用方括号正确表达。
+Ar...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/14</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -529,26 +427,24 @@ let http = require(&apos;htt...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/27/vue组件之间的数据传递/" >
+            <a class="abstract-title" href = "/2018/06/20/常用标签样式重置/" >
                 
-                    <span>vue组件之间的数据传递及共享</span>
+                    <span>标签样式重置</span>
             </a>
             <div class="abstract-content">
-                最近在整理项目中代码，在组件之间数据传递遇到了问题，所以做了这次总结，如有不对的地方，望指正。
-父组件如何将数据传到子组件中父组件可以通过Prop传递数据到子组件中。
-这里需要注意的是：
-Prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是反过来不会。这是为了防止子组件无意间修改了父组件的状态，
-来避免应用的数据流变得难以理解。
-
-每次父组件更新时，子组件的所有 Prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop。如果你这么做了，
-Vue 会在控制台给出警告。
- 在两种情况下，我们很容易忍不住想去修改 prop 中数据：
-1、Prop 作为初始值传入后，...
+                美化input框/*在IE10+浏览器中, 使用css即可隐藏input文本输入框右侧的叉号*/
+input[type=text]::-ms-clear,::-ms-reveal{display:none;}
+input::-ms-clear,::-ms-reveal{display:none;}
+input{
+    /*去除点击出现轮廓颜色*/
+    outline: none;
+    -webkit-appearance: none; /*去除系统默认的样式，苹果手机上的阴影*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -558,24 +454,113 @@ Vue 会在控制台给出警告。
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/01/15/vue项目实现记住密码到cookie功能/" >
+            <a class="abstract-title" href = "/2018/06/20/基于Vue2.0实现后台系统权限控制/" >
                 
-                    <span>vue项目实现记住密码到cookie功能</span>
+                    <span>基于Vue2.0实现后台系统权限控制</span>
             </a>
             <div class="abstract-content">
-                
-实现功能：1.记住密码勾选，点登陆时，将账号和密码保存到cookie，下次登陆自动显示到表单内 2.不勾选，点登陆时候则清空之前保存到cookie的值，下次登陆需要手动输入
-
-大体思路就是通过存/取/删cookie实现的；每次进入登录页，先去读取cookie，如果浏览器的cookie中有账号信息，就自动填充到登录框中，存cookie是在登录成功之后，判断当前用户是否勾选了记住密码，如果勾选了，则把账号信息存到cookie当中，效果图如上：
-
-html代码
-&lt;div class=&quot;ms-login&quot;&gt;
-        &lt;el-form :model=...
+                项目背景:现有一个后台管理系统，共存在两种类型的人员
+①超级管理员（称作admin），②普通用户（称作editor）
+每种类型的人看到的操作栏并不一样，可以进行的操作也不尽相同，于是就需要程序处理一下各个权限问题。
+具体实现思路1 创建vue实例的时候将vue-router挂载，但这个时候vue-router挂载一些登录或者不用权限的公用的页面。
+2 当用户登录后，获取用role，将role和路由表每个页面的需要的权限作比较，生成最终用户可访问的路由表。
+3 调用router.addRoutes(store.getters.addRouters)添加用户可访问的路由。
+4 使用vuex管...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/15</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/20/基于gulp的前端脚手架/" >
+                
+                    <span>基于gulp的前端脚手架</span>
+            </a>
+            <div class="abstract-content">
+                最近看到gulp和webpack各种脚手架，这次来入门下这二种脚手架。
+Gulp快速入门首先确保本地已安装node.js和npm然后通过npm全局安装gulp
+$ npm install -g gulp   
+根据不同项目的要求，可选择适合的gulp插件进行后续开发。如果项目的要求基本相似（如小型的活动运营H5，平台页面等）可建立自己的脚手架工具以便于后续快速开发。
+搭建脚手架1、首先在项目根目录下通过命令行安装项目依赖
+$ npm install --save-dev gulp
+2、在项目根目录下新建文件gulpfile.js。要想完成相关插件的配置，首先需要了解gulp相关方法
+gu...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/20/前端自动化环境构建/" >
+                
+                    <span>前端自动化构建环境的搭建</span>
+            </a>
+            <div class="abstract-content">
+                Web前端使用工程化方式构建；
+   目前需要一些简单的功能：
+1. 版本控制
+6. 编译SASS
+2. 检查JS
+3. 图片合并
+4. 压缩CSS
+5. 压缩JS
+这些都是每个Web项目在构建、开发阶段需要做的事情。前端自动化构建环境可以把这些重复工作一次配置，多次重复执行，极大的提高开发效率。
+目前最知名的构建工具： Gulp、Grunt、NPM + Webpack；
+grunt是前端工程化的先驱
+
+gulp更自然基于流的方式连接任务
+
+Webpack最年轻，擅长用于依赖管理，配置稍较复杂
+
+推荐使用Gulp，Gulp基于nodejs中stream，效率更好语法更自然,不需要编写复杂...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/20/伪类、伪元素使用说明/" >
+                
+                    <span>伪类、伪元素使用说明</span>
+            </a>
+            <div class="abstract-content">
+                伪类、伪元素配合CSS3可以完成非常多有意思的效果，为方便个人开发时候的快速查阅，记录了以下常用到的一些伪类伪元素的简要中文说明；
+简单区分：
+:Pseudo-classes        伪类:DOM在不同状态、不同位置下的特殊效果；
+::Pseudo-elements    伪元素：DOM按匹配规则伪造出的元素；
+注意点：
+伪类添加的内容元素或伪类效果通在DOM的源代码中是看不见的，需要借助开发者工具才能看见;
+使用屏幕阅读器等设备无法访问和读取伪元素生成的内容。因此不应该使用伪元素来添加正文内容等重要信息到页面上展示，应确保主体内容的完整性。
+伪类添加的元素也可以使用CSS样式进行...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -1192,28 +1177,6 @@ html代码
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-archive"> Total : 29 </div>
     
     <div class="post-archive">
@@ -1230,161 +1193,138 @@ html代码
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/14/koa框架/" >从头实现一个koa框架</a>
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/性能优化方式/" >性能优化</a>
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/简单实现VUE中的MVVM/" >简单实现VUE中的MVVM</a>
+        </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/操作DOM常用API总结/" >DOM常见API</a>
+        </li>
     
-        </ul>
     
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/vue组件之间的数据传递/" >vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/引用类型/" >引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/基于Vue2.0实现后台系统权限控制/" >基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/常用标签样式重置/" >标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/事件/" >JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/伪类、伪元素使用说明/" >伪类、伪元素使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/基于gulp的前端脚手架/" >基于gulp的前端脚手架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Javascript之闭包/" >JavaScript之闭包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Linux 基础命令/" >Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/koa框架/" >从头实现一个koa框架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/mongodb使用方法/" >mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Http/" >Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/iconfont字体图片/" >iconfont图片使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/JSON格式/" >JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/BFC问题/" >BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Git 简单使用说明 /" >Git 简单使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Express中间件/" >Express中间件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/CSS3动画/" >CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/DOM/" >DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/BOM/" >BOM</a>
+        </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href= "/2018/06/14/新公司常见功能函数封装/" >新公司常见功能函数封装</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/性能优化方式/" >性能优化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/mongodb使用方法/" >mongodb常用操作指令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/15</span><a class="archive-post-title" href= "/2018/01/15/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2017/09/21/BFC问题/" >BFC</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2017/07/27/常用标签样式重置/" >标签样式重置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2017/06/20/Linux 基础命令/" >Linux 基础命令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2017/05/13/Http/" >Ajax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2017/03/23/CSS3动画/" >CSS3 动画</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2017/02/01/BOM/" >BOM</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2017/01/20/DOM/" >DOM</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2016 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2016/12/12/事件/" >JS事件</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2016/11/20/JSON格式/" >JSON格式详解</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2016/10/02/操作DOM常用API总结/" >DOM常见API</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2016/10/02/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/21/简单实现VUE中的MVVM/" >简单实现VUE中的MVVM</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/10/02/基于Vue2.0实现后台系统权限控制/" >基于Vue2.0实现后台系统权限控制</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/10/27/基于gulp的前端脚手架/" >基于gulp的前端脚手架</a>
         </li>
     
     
@@ -1399,109 +1339,6 @@ html代码
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/05/25/与原生交互的常见方式/" >与原生交互的常见方式</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2016/06/30/Git 简单使用说明 /" >Git 简单使用说明</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/11/18/Javascript之闭包/" >JavaScript之闭包</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/08/29/iconfont字体图片/" >iconfont图片使用技巧</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Express中间件/" >Express中间件</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/02/27/vue组件之间的数据传递/" >vue组件之间的数据传递及共享</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/04/05/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2016 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2016/09/15/引用类型/" >引用类型</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2016/08/05/伪类、伪元素使用说明/" >伪类、伪元素使用说明</a>
         </li>
     
     </div>

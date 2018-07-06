@@ -291,25 +291,28 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/11/18/Javascript之闭包/" >
+            <a class="abstract-title" href = "/2018/06/20/事件/" >
                 
-                    <span>JavaScript之闭包</span>
+                    <span>JS事件</span>
             </a>
             <div class="abstract-content">
-                面试当中总觉得自己也不是特别明白，今天过来总结一下。
-什么是闭包？JavaScript的闭包是一个特色。官方解释是：闭包是一个拥有许多变量和绑定了这些变量的环境的表达式（通常是一个函数），因而这些变量也是该表达式的一部分。这句话相信有许多人看不懂。我来表述一下我对JavaScript闭包的理解：
-闭包的例子：
-var count=10;//全局作用域 标记为flag1
-function add(){
-    var count=0;//函数全局作用域 标记为flag2
-    return function(){
-        count+=1;//函数的内部作用域
-        a...
+                冒泡和捕获阶段
+
+一图流解释：IE 事件流叫做事件冒泡，从元素逐级向上传递，所有现代浏览器支持事件冒泡。
+事件捕获是网景团队提出，虽然规范要求应该从 document 对象开始，但浏览器基本都从 window 对象开始。特殊需求才会使用。
+
+目标阶段
+需要注意的是，你以为点击蚊子，事件目标节点在div上，其实实际触发会在最深的节点，比如 p 或者 span 等子节点上。
+
+DOM 事件流
+DOM2级事件规定的事件流包括三个阶段：事件捕获，目标事件阶段和事件冒泡阶段。
+规范要求：捕获阶段不触发目标元素事件，然后目标事件处理，再进行冒泡阶段。
+然而多数浏览器在捕获阶段也实现了目标元素事件，导...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/11/18</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -319,24 +322,24 @@ function add(){
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/27/基于gulp的前端脚手架/" >
+            <a class="abstract-title" href = "/2018/06/20/vue项目实现记住密码到cookie功能/" >
                 
-                    <span>基于gulp的前端脚手架</span>
+                    <span>vue项目实现记住密码到cookie功能</span>
             </a>
             <div class="abstract-content">
-                最近看到gulp和webpack各种脚手架，这次来入门下这二种脚手架。
-Gulp快速入门首先确保本地已安装node.js和npm然后通过npm全局安装gulp
-$ npm install -g gulp   
-根据不同项目的要求，可选择适合的gulp插件进行后续开发。如果项目的要求基本相似（如小型的活动运营H5，平台页面等）可建立自己的脚手架工具以便于后续快速开发。
-搭建脚手架1、首先在项目根目录下通过命令行安装项目依赖
-$ npm install --save-dev gulp
-2、在项目根目录下新建文件gulpfile.js。要想完成相关插件的配置，首先需要了解gulp相关方法
-gu...
+                
+实现功能：1.记住密码勾选，点登陆时，将账号和密码保存到cookie，下次登陆自动显示到表单内 2.不勾选，点登陆时候则清空之前保存到cookie的值，下次登陆需要手动输入
+
+大体思路就是通过存/取/删cookie实现的；每次进入登录页，先去读取cookie，如果浏览器的cookie中有账号信息，就自动填充到登录框中，存cookie是在登录成功之后，判断当前用户是否勾选了记住密码，如果勾选了，则把账号信息存到cookie当中，效果图如上：
+
+html代码
+&lt;div class=&quot;ms-login&quot;&gt;
+        &lt;el-form :model=...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -346,23 +349,26 @@ gu...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/02/基于Vue2.0实现后台系统权限控制/" >
+            <a class="abstract-title" href = "/2018/06/20/vue组件之间的数据传递/" >
                 
-                    <span>基于Vue2.0实现后台系统权限控制</span>
+                    <span>vue组件之间的数据传递及共享</span>
             </a>
             <div class="abstract-content">
-                项目背景:现有一个后台管理系统，共存在两种类型的人员
-①超级管理员（称作admin），②普通用户（称作editor）
-每种类型的人看到的操作栏并不一样，可以进行的操作也不尽相同，于是就需要程序处理一下各个权限问题。
-具体实现思路1 创建vue实例的时候将vue-router挂载，但这个时候vue-router挂载一些登录或者不用权限的公用的页面。
-2 当用户登录后，获取用role，将role和路由表每个页面的需要的权限作比较，生成最终用户可访问的路由表。
-3 调用router.addRoutes(store.getters.addRouters)添加用户可访问的路由。
-4 使用vuex管...
+                最近在整理项目中代码，在组件之间数据传递遇到了问题，所以做了这次总结，如有不对的地方，望指正。
+父组件如何将数据传到子组件中父组件可以通过Prop传递数据到子组件中。
+这里需要注意的是：
+Prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是反过来不会。这是为了防止子组件无意间修改了父组件的状态，
+来避免应用的数据流变得难以理解。
+
+每次父组件更新时，子组件的所有 Prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop。如果你这么做了，
+Vue 会在控制台给出警告。
+ 在两种情况下，我们很容易忍不住想去修改 prop 中数据：
+1、Prop 作为初始值传入后，...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/02</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -372,21 +378,42 @@ gu...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/09/21/BFC问题/" >
+            <a class="abstract-title" href = "/2018/06/20/mongodb使用方法/" >
                 
-                    <span>BFC</span>
+                    <span>mongodb常用操作指令</span>
             </a>
             <div class="abstract-content">
-                什么是BFCBFC全称是Block Formatting Context，即块格式化上下文。它是CSS2.1规范定义的，关于CSS渲染定位的一个概念。要明白BFC到底是什么，首先来看看什么是视觉格式化模型。
-视觉格式化模型视觉格式化模型定义了盒（Box）的生成，盒主要包括了块盒、行内盒、匿名盒（没有名字不能被选择器选中的盒）以及一些实验性的盒（未来可能添加到规范中）。盒的类型由display属性决定。
-块盒（block box）块盒有以下特性：
-1、当元素的CSS属性display为block，list-item或 table时，它是块级元素 block-level；
-2、视觉上呈现为块...
+                1.创建简单mongodb服务器
+mongod --dbpath E:\MongoDB\db
+
+mongo.exe
+
+
+2.数据库操作(CRUD)
+显示数据库名称：show dbs
+
+切换数据库：use &lt;dbname&gt;
+
+删除当前数据库：db.dropDatabase()
+
+想要新建数据库，直接使用use &lt;dbname&gt;,在需要的时候会自动创建
+
+新建表db.&lt;表名&gt;.insert({});数据以json的格式
+
+显示表名 ：show collections
+
+
+
+例子
+
+&gt; use exapmledb
+
+&gt; db.ex_collect...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/09/21</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -396,58 +423,7 @@ gu...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/08/29/iconfont字体图片/" >
-                
-                    <span>iconfont图片使用技巧</span>
-            </a>
-            <div class="abstract-content">
-                font-class引用
-font-class是unicode使用方式的一种变种，主要是解决unicode书写不直观，语意不明确的问题。
-与unicode使用方式相比，具有如下特点：
-1.兼容性良好，支持ie8+，及所有现代浏览器。2.相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。3.因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。4.不过因为本质上还是使用的字体，所以多色图标还是不支持的。使用步骤如下：
-第一步：引入项目下面生成的fontclass代码：1&lt;link rel="stylesheet" t...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/29</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/07/27/常用标签样式重置/" >
-                
-                    <span>标签样式重置</span>
-            </a>
-            <div class="abstract-content">
-                美化input框/*在IE10+浏览器中, 使用css即可隐藏input文本输入框右侧的叉号*/
-input[type=text]::-ms-clear,::-ms-reveal{display:none;}
-input::-ms-clear,::-ms-reveal{display:none;}
-input{
-    /*去除点击出现轮廓颜色*/
-    outline: none;
-    -webkit-appearance: none; /*去除系统默认的样式，苹果手机上的阴影*/
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/07/27</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/06/20/Linux 基础命令/" >
+            <a class="abstract-title" href = "/2018/06/20/Linux 基础命令/" >
                 
                     <span>Linux 基础命令</span>
             </a>
@@ -467,7 +443,7 @@ input{
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/06/20</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -477,27 +453,86 @@ input{
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/13/Http/" >
+            <a class="abstract-title" href = "/2018/06/20/koa框架/" >
                 
-                    <span>Ajax</span>
+                    <span>从头实现一个koa框架</span>
             </a>
             <div class="abstract-content">
-                XMLHttpRequestvar xhr = new XMLHttpRequest()
-xhr.onreadystatechange = function () {
-    // 这里的函数异步执行，可参考之前 JS 基础中的异步模块
-    if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-            alert(xhr.responseText)
-        }
+                看完之后甚是膜拜，决定收藏记录下，引用地址https://zhuanlan.zhihu.com/p/35040744
+笔者认为，理解koa，主要需要搞懂四条主线，其实也是实现koa的四个步骤，
+   分别是：
+1. 封装node http Server
+2. 构造resquest, response, context对象
+3. 中间件机制
+4. 错误处理
+主线一：封装node http Server: 从hello world说起首先，不考虑框架，如果使用原生http模块来实现一个返回hello world的后端app，代码如下：
+let http = require(&apos;htt...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/20/JSON格式/" >
+                
+                    <span>JSON格式详解</span>
+            </a>
+            <div class="abstract-content">
+                JSON是一种数据格式，又是 JS 的一个严格的子集，但并不从属于JavaScript.
+语法
+简单值：字符串、数值、布尔值、null.不支持 js 中的特殊值 undefined。
+对象：一种复杂数据类型，无序键值对儿。其中的值可以为简单值，也可以是复杂数据类型值。
+数组，一种复杂数据类型，有序的值的列表，可以通过数值索引访问，数组的值也可以是任意类型。
+
+简单值
+js 字符串与 JSON 字符串最大的不同，在于 JSON 字符串必须为双引号，单引号可能导致语法错误。
+布尔值和 null 也是有效的 JSON 格式，但通常是会用复杂的数据结构表示 JSON 对象。
+
+对象
+js 对象字...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/20/JAVASCRIPT对象/" >
+                
+                    <span>JavaScript创建对象和实现继承</span>
+            </a>
+            <div class="abstract-content">
+                JavaScript创建对象构造函数模式创建对象function Person(name, job) {
+    this.name = name
+    this.job = job
+    this.sayName = function() {
+        console.log(this.name)
     }
 }
-xhr.open(&quot;GET&quot;, &quot;/api&quot;, false)
-xhr.send(...
+var person1 = new Person(‘Jiang’, ‘student’)
+var person2 = new Person(‘X’, ‘Doctor’)
+没有显示的创建对象，使用new来调用这个构造函数，使用new后会自动执行如下操作
+创建一个新对象...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/13</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -507,33 +542,25 @@ xhr.send(...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/05/前端自动化环境构建/" >
+            <a class="abstract-title" href = "/2018/06/20/Javascript之闭包/" >
                 
-                    <span>前端自动化构建环境的搭建</span>
+                    <span>JavaScript之闭包</span>
             </a>
             <div class="abstract-content">
-                Web前端使用工程化方式构建；
-   目前需要一些简单的功能：
-1. 版本控制
-6. 编译SASS
-2. 检查JS
-3. 图片合并
-4. 压缩CSS
-5. 压缩JS
-这些都是每个Web项目在构建、开发阶段需要做的事情。前端自动化构建环境可以把这些重复工作一次配置，多次重复执行，极大的提高开发效率。
-目前最知名的构建工具： Gulp、Grunt、NPM + Webpack；
-grunt是前端工程化的先驱
-
-gulp更自然基于流的方式连接任务
-
-Webpack最年轻，擅长用于依赖管理，配置稍较复杂
-
-推荐使用Gulp，Gulp基于nodejs中stream，效率更好语法更自然,不需要编写复杂...
+                面试当中总觉得自己也不是特别明白，今天过来总结一下。
+什么是闭包？JavaScript的闭包是一个特色。官方解释是：闭包是一个拥有许多变量和绑定了这些变量的环境的表达式（通常是一个函数），因而这些变量也是该表达式的一部分。这句话相信有许多人看不懂。我来表述一下我对JavaScript闭包的理解：
+闭包的例子：
+var count=10;//全局作用域 标记为flag1
+function add(){
+    var count=0;//函数全局作用域 标记为flag2
+    return function(){
+        count+=1;//函数的内部作用域
+        a...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/05</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -543,31 +570,21 @@ Webpack最年轻，擅长用于依赖管理，配置稍较复杂
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/03/23/CSS3动画/" >
+            <a class="abstract-title" href = "/2018/06/20/iconfont字体图片/" >
                 
-                    <span>CSS3 动画</span>
+                    <span>iconfont图片使用技巧</span>
             </a>
             <div class="abstract-content">
-                 CSS3 可以实现动画，代替原来的 Flash 和 JavaScript 方案。
- css动画分为CSS Transition和 CSS Animation
-CSS Transition基本用法在CSS 3引入Transition（过渡）这个概念之前，CSS是没有时间轴的。也就是说，所有的状态变化，都是即时完成。
-img{
-    height:15px;
-    width:15px;
-}
-
-img:hover{
-    height: 450px;
-    width: 450px;
-}
-transition的作用在于，指定状态变化所需要的时间。
-img{
-    transiti...
+                font-class引用
+font-class是unicode使用方式的一种变种，主要是解决unicode书写不直观，语意不明确的问题。
+与unicode使用方式相比，具有如下特点：
+1.兼容性良好，支持ie8+，及所有现代浏览器。2.相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。3.因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。4.不过因为本质上还是使用的字体，所以多色图标还是不支持的。使用步骤如下：
+第一步：引入项目下面生成的fontclass代码：1&lt;link rel="stylesheet" t...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/03/23</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
                 </div>
                 <!-- tags  -->
                 
@@ -1103,28 +1120,6 @@ img{
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-archive"> Total : 29 </div>
     
     <div class="post-archive">
@@ -1141,161 +1136,138 @@ img{
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/14/koa框架/" >从头实现一个koa框架</a>
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/性能优化方式/" >性能优化</a>
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/简单实现VUE中的MVVM/" >简单实现VUE中的MVVM</a>
+        </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/操作DOM常用API总结/" >DOM常见API</a>
+        </li>
     
-        </ul>
     
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/vue组件之间的数据传递/" >vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/引用类型/" >引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/基于Vue2.0实现后台系统权限控制/" >基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/常用标签样式重置/" >标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/事件/" >JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/伪类、伪元素使用说明/" >伪类、伪元素使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/基于gulp的前端脚手架/" >基于gulp的前端脚手架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Javascript之闭包/" >JavaScript之闭包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Linux 基础命令/" >Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/koa框架/" >从头实现一个koa框架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/mongodb使用方法/" >mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Http/" >Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/iconfont字体图片/" >iconfont图片使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/JSON格式/" >JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/BFC问题/" >BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Git 简单使用说明 /" >Git 简单使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/Express中间件/" >Express中间件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/CSS3动画/" >CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/DOM/" >DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/BOM/" >BOM</a>
+        </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href= "/2018/06/14/新公司常见功能函数封装/" >新公司常见功能函数封装</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/性能优化方式/" >性能优化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/mongodb使用方法/" >mongodb常用操作指令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/15</span><a class="archive-post-title" href= "/2018/01/15/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2017/09/21/BFC问题/" >BFC</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2017/07/27/常用标签样式重置/" >标签样式重置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2017/06/20/Linux 基础命令/" >Linux 基础命令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2017/05/13/Http/" >Ajax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2017/03/23/CSS3动画/" >CSS3 动画</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2017/02/01/BOM/" >BOM</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2017/01/20/DOM/" >DOM</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2016 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2016/12/12/事件/" >JS事件</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2016/11/20/JSON格式/" >JSON格式详解</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2016/10/02/操作DOM常用API总结/" >DOM常见API</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2016/10/02/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/21/简单实现VUE中的MVVM/" >简单实现VUE中的MVVM</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/10/02/基于Vue2.0实现后台系统权限控制/" >基于Vue2.0实现后台系统权限控制</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/10/27/基于gulp的前端脚手架/" >基于gulp的前端脚手架</a>
         </li>
     
     
@@ -1310,109 +1282,6 @@ img{
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/05/25/与原生交互的常见方式/" >与原生交互的常见方式</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2016/06/30/Git 简单使用说明 /" >Git 简单使用说明</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/11/18/Javascript之闭包/" >JavaScript之闭包</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/08/29/iconfont字体图片/" >iconfont图片使用技巧</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Express中间件/" >Express中间件</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/02/27/vue组件之间的数据传递/" >vue组件之间的数据传递及共享</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/04/05/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2016 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2016/09/15/引用类型/" >引用类型</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2016/08/05/伪类、伪元素使用说明/" >伪类、伪元素使用说明</a>
         </li>
     
     </div>
