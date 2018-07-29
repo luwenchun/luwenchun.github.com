@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>新公司常见功能函数封装 · bigdeal&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180226 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180226 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/favicon.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >bigdeal&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">新公司常见功能函数封装</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>bigdeal's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            新公司常见功能函数封装
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/07/22</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>这些函数包括常见的业务函数和通用函数</p>
+<h4 id="解决移动端300MS的点击延时，依赖fastClick"><a href="#解决移动端300MS的点击延时，依赖fastClick" class="headerlink" title="解决移动端300MS的点击延时，依赖fastClick"></a>解决移动端300MS的点击延时，依赖fastClick</h4><p><a href="https://github.com/ftlabs/fastclick">更多查看：https://github.com/ftlabs/fastclick</a></p>
+<pre><code>import FastClick from &apos;fastclick&apos;;
+(function(doc) {
+
+    if (&apos;addEventListener&apos; in doc) {
+    doc.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        FastClick.attach(doc.body);
+    }, false);
+    }
+
+})(document);
+</code></pre><h4 id="移动端使用rem适配"><a href="#移动端使用rem适配" class="headerlink" title="移动端使用rem适配"></a>移动端使用rem适配</h4><pre><code>(function(doc, win) {
+var docEl = doc.documentElement,
+    resizeEvt = &apos;orientationchange&apos; in window ? &apos;orientationchange&apos; : &apos;resize&apos;,
+    recalc = function() {
+    var clientWidth = docEl.clientWidth;
+    if (!clientWidth) return;
+    docEl.style.fontSize = 20 * (clientWidth / 320) + &apos;px&apos;;
+    };
+if (!doc.addEventListener) return;
+win.addEventListener(resizeEvt, recalc, false);
+doc.addEventListener(&apos;DOMContentLoaded&apos;, recalc, false);
+})(document, window);
+</code></pre><h4 id="后台响应状态码容错处理"><a href="#后台响应状态码容错处理" class="headerlink" title="后台响应状态码容错处理"></a>后台响应状态码容错处理</h4><pre><code>export const message =  [
+    { code: 400, msg: &apos;1、语义有误，当前请求无法被服务器理解。除非进行修改，否则客户端不应该重复提交这个请求。 　　2、请求参数有误。&apos;},
+    { code: 404, msg: &apos;请求失败，请求所希望得到的资源未被在服务器上发现。&apos;},
+    { code: 405, msg: &apos;请求行中指定的请求方法不能被用于请求相应的资源。&apos;},
+    { code: 413, msg: &apos;服务器拒绝处理当前请求，因为该请求提交的实体数据大小超过了服务器愿意或者能够处理的范围。此种情况下，服务器可以关闭连接以免客户端继续发送此请求。 　　如果这个状况是临时的，服务器应当返回一个 Retry-After 的响应头，以告知客户端可以在多少时间以后重新尝试。&apos;},
+    { code: 414, msg: &apos;请求的URI 长度超过了服务器能够解释的长度，因此服务器拒绝对该请求提供服务。&apos;},
+    { code: 500, msg: &apos;服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。一般来说，这个问题都会在服务器的程序码出错时出现。&apos;},
+    { code: 501, msg: &apos;服务器不支持当前请求所需要的某个功能。当服务器无法识别请求的方法，并且无法支持其对任何资源的请求。&apos;},
+    { code: 502, msg: &apos;作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。&apos;},
+    { code: 503, msg: &apos;由于临时的服务器维护或者过载，服务器当前无法处理请求。&apos;},
+    { code: 504, msg: &apos;作为网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP、FTP、LDAP）或者辅助服务器（例如DNS）收到响应。&apos;},
+    { code: 505, msg: &apos;服务器不支持，或者拒绝支持在请求中使用的 HTTP 版本。这暗示着服务器不能或不愿使用与客户端相同的版本。响应中应当包含一个描述了为何版本不被支持以及服务器支持哪些协议的实体。&apos;},
+    { code: 600, msg: &apos;&apos;},
+]
+</code></pre><h4 id="全局自定义过滤器，业务场景式过滤器在需要的实例处添加"><a href="#全局自定义过滤器，业务场景式过滤器在需要的实例处添加" class="headerlink" title="全局自定义过滤器，业务场景式过滤器在需要的实例处添加"></a>全局自定义过滤器，业务场景式过滤器在需要的实例处添加</h4><pre><code>import Vue from &apos;vue&apos;
+import * as path from &apos;../config/path&apos;;
+let filters = {
+
+prefixImagePath:function (value,level) {
+    if(!value||typeof value ==&apos;undefined&apos;||value==0){
+    return &apos;./images/noPicture.png&apos;;
+    }
+    return path[&apos;http://img13.360buyimg.com/&apos;+level]+value.toString();
+},
+dotReplace:function (value,maxNum) {
+    //todo计算字节
+    if(!value||typeof(value)==&apos;undefined&apos;||value==0){
+    return &apos;&apos;;
+    }
+    if(maxNum&gt;(value.length-1)){
+    return value;
+    }
+    return value.toString().substr(0,maxNum)+&apos;...&apos;
+},
+//.....
+
+priceFormat:function(value){
+    var valueSplit = [];
+    value=value.replace(/^(\d*)$/,&quot;$1.&quot;);
+    value=(value+&quot;00&quot;).replace(/(\d*\.\d\d)\d*/,&quot;$1&quot;);
+    value=value.replace(&quot;.&quot;,&quot;,&quot;);
+    var re=/(\d)(\d{3},)/;
+    while(re.test(value))
+    value=value.replace(re,&quot;$1,$2&quot;);
+    value=value.replace(/,(\d\d)$/,&quot;.$1&quot;);
+    valueSplit = value.split(&apos;.&apos;);
+    if(valueSplit[1]&gt;0){
+    return  value.replace(/^\./,&quot;0.&quot;)
+    }else {
+    return valueSplit[0];
+    }
+
+}
+
+};
+
+
+export default ((vue)=&gt; {
+for(let fid in filters){
+    vue.filter(fid,filters[fid]);
+}
+})(Vue)
+</code></pre><h4 id="简单封装本地存储及cookie操作"><a href="#简单封装本地存储及cookie操作" class="headerlink" title="简单封装本地存储及cookie操作"></a>简单封装本地存储及cookie操作</h4><pre><code>**只实例化一次，同域下跨页面数据共享**
+**https://github.com/marcuswestin/store.js**
+**https://github.com/js-cookie/js-cookie**
+
+        import iStore from &apos;store&apos;;
+        import jsCookie from &apos;js-cookie&apos;;
+
+        class Store {
+
+        constructor(){
+
+        }
+
+        getLocal(key){
+            return iStore.get(key);
+        }
+
+        setLocal(key,value){
+            iStore.set(key,value);
+        }
+
+        removeLocal(key){
+            iStore.remove(key);
+        }
+
+        setCookie(key,value){
+            jsCookie.set(key,value);
+        }
+
+        setCookies(_object={}){
+            for(let key in _object){
+            this.setCookie(key,_object[key]);
+            }
+        }
+
+        getCookie(key){
+            return jsCookie.get(key);
+        }
+
+        removeCookie(key){
+            jsCookie.remove(key);
+        }
+        getCookies(){
+            return jsCookie.get();
+        }
+
+        }
+
+        function install(){
+            let instance;
+            if(!window.hasOwnProperty(&apos;store&apos;)){
+            window.store = instance = new Store();
+            }else {
+            instance = window[&apos;store&apos;];
+            }
+
+            return instance;
+        }
+
+        export default install();
+</code></pre><h4 id="截取url参数值"><a href="#截取url参数值" class="headerlink" title="截取url参数值"></a>截取url参数值</h4><pre><code>getQueryValue(name){
+    let reg = new RegExp(&quot;(^|&amp;)&quot;+ name +&quot;=([^&amp;]*)(&amp;|$)&quot;);
+    let subString = location.href.split(&apos;?&apos;)[1]||&apos;&apos;;
+    let r = subString.match(reg);
+    if(r!=null)return  decodeURI(r[2]); return null;
+}
+
+  getMutiQueryValue(_arr = []) {
+    let resultObj = {};
+    _arr.forEach((item, index) =&gt; {
+    resultObj[item] = this.getQueryValue(item);
+    })
+
+    return resultObj;
+}
+</code></pre><h4 id="浏览量"><a href="#浏览量" class="headerlink" title="浏览量"></a>浏览量</h4><pre><code>@param {Number} n 
+@return String
+
+
+        browseCunt(n) {
+            n = typeof n == &apos;string&apos; ? Number(n) : n;
+            if (n &gt;= 10000) {
+            n = Math.round(Math.round(n / 100) / 10) /10+ &apos;W&apos;;
+            }
+            return n;
+        }
+</code></pre><h4 id="日期格式转换"><a href="#日期格式转换" class="headerlink" title="日期格式转换"></a>日期格式转换</h4><pre><code>@param {String|Number} date 
+@return String
+
+
+        dateName(date) {
+            if (!date) return !1;
+            const curTime = (new Date()).getTime()
+            let old = new Date(date)
+            if (isNaN(old)) {   // IOS 兼容
+            old = new Date(date.replace(/\-/g, &apos;/&apos;));
+            }
+            let cur = curTime - old.getTime();
+            cur = Math.abs(cur);
+            let msg = &apos;&apos;;
+            if (cur &gt; 259200000) { // 大于三天,显示日期
+            // msg = ((old.getMonth()) &lt; 9 ? &apos;0&apos; + (old.getMonth() + 1) : (old.getMonth())) + &apos;-&apos; + (old.getDate() &lt; 9 ? &apos;0&apos; + old.getDate() : old.getDate());
+            msg = moment(old).format(&apos;YYYY-MM-DD&apos;);
+            } else if (cur &gt;= 86400000) {  // 大于等于24小时,显示X天前
+            msg = Math.floor(cur / 86400000) + &apos;天前&apos;;
+            } else if (cur &gt;= 3600000) {  // 大于等于1小时,显示X小时前
+            msg = Math.floor(cur / 3600000) + &apos;小时前&apos;;
+            } else if (cur &gt;= 60000) {  // 大于等于1分钟,显示X分钟前
+            msg = Math.floor(cur / 60000) + &apos;分钟前&apos;;
+            } else {  // 小于60S, 显示刚刚
+            msg = &apos;刚刚&apos;
+            }
+            return msg;
+        };
+</code></pre><p>###/* 封装ajax函数</p>
+<pre><code>* @param {string}obj.type http连接的方式，包括POST和GET两种方式
+* @param {string}obj.url 发送请求的url
+* @param {boolean}obj.async 是否为异步请求，true为异步的，false为同步的
+* @param {object}obj.data 发送的参数，格式为对象类型
+* @param {function}obj.success ajax发送并接收成功调用的回调函数
+* @param {function}obj.error ajax发送失败或者接收失败调用的回调函数
+*/
+//  ecDo.ajax({
+//      type:&apos;get&apos;,
+//      url:&apos;xxx&apos;,
+//      data:{
+//          id:&apos;111&apos;
+//      },
+//      success:function(res){
+//          console.log(res)
+//      }
+//  })
+ajax: function (obj) {
+    obj = obj || {};
+    obj.type = obj.type.toUpperCase() || &apos;POST&apos;;
+    obj.url = obj.url || &apos;&apos;;
+    obj.async = obj.async || true;
+    obj.data = obj.data || null;
+    obj.success = obj.success || function () {
+        };
+    obj.error = obj.error || function () {
+        };
+    var xmlHttp = null;
+    if (XMLHttpRequest) {
+        xmlHttp = new XMLHttpRequest();
+    } else {
+        xmlHttp = new ActiveXObject(&apos;Microsoft.XMLHTTP&apos;);
+    }
+    var params = [];
+    for (var key in obj.data) {
+        params.push(key + &apos;=&apos; + obj.data[key]);
+    }
+    var postData = params.join(&apos;&amp;&apos;);
+    if (obj.type.toUpperCase() === &apos;POST&apos;) {
+        xmlHttp.open(obj.type, obj.url, obj.async);
+        xmlHttp.setRequestHeader(&apos;Content-Type&apos;, &apos;application/x-www-form-urlencoded;charset=utf-8&apos;);
+        xmlHttp.send(postData);
+    } else if (obj.type.toUpperCase() === &apos;GET&apos;) {
+        xmlHttp.open(obj.type, obj.url + &apos;?&apos; + postData, obj.async);
+        xmlHttp.send(null);
+    }
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 &amp;&amp; xmlHttp.status == 200) {
+            obj.success(xmlHttp.responseText);
+        } else {
+            obj.error(xmlHttp.responseText);
+        }
+    };
+}
+</code></pre><h3 id="图片没加载出来时用一张图片代替"><a href="#图片没加载出来时用一张图片代替" class="headerlink" title="//图片没加载出来时用一张图片代替"></a>//图片没加载出来时用一张图片代替</h3><pre><code>//图片没加载出来时用一张图片代替
+aftLoadImg: function (obj, url, errorUrl,cb) {
+    var oImg = new Image(), _this = this;
+    oImg.src = url;
+    oImg.onload = function () {
+        obj.src = oImg.src;
+        if (cb &amp;&amp; _this.istype(cb, &apos;function&apos;)) {
+            cb(obj);
+        }
+    }
+    oImg.onerror=function () {
+        obj.src=errorUrl;
+        if (cb &amp;&amp; _this.istype(cb, &apos;function&apos;)) {
+            cb(obj);
+        }
+    }
+},
+//图片滚动懒加载
+//@className {string} 要遍历图片的类名
+//@num {number} 距离多少的时候开始加载 默认 0
+//比如，一张图片距离文档顶部3000，num参数设置200，那么在页面滚动到2800的时候，图片加载。不传num参数就滚动，num默认是0，页面滚动到3000就加载
+//html代码
+//&lt;p&gt;&lt;img data-src=&quot;https://user-gold-cdn.xitu.io/2017/12/7/160319f12631736f&quot; class=&quot;load-img&quot; width=&apos;528&apos; height=&apos;304&apos; /&gt;&lt;/p&gt;
+//&lt;p&gt;&lt;img data-src=&quot;https://user-gold-cdn.xitu.io/2017/12/7/160319f12631736f&quot; class=&quot;load-img&quot; width=&apos;528&apos; height=&apos;304&apos; /&gt;&lt;/p&gt;
+//&lt;p&gt;&lt;img data-src=&quot;https://user-gold-cdn.xitu.io/2017/12/7/160319f12631736f&quot; class=&quot;load-img&quot; width=&apos;528&apos; height=&apos;304&apos; /&gt;&lt;/p&gt;....
+//data-src储存src的数据，到需要加载的时候把data-src的值赋值给src属性，图片就会加载。
+//详细可以查看testLoadImg.html
+//window.onload = function() {
+//    loadImg(&apos;load-img&apos;,100);
+//    window.onscroll = function() {
+//        ecDo.loadImg(&apos;load-img&apos;,100);
+//        }
+//}
+loadImg: function (className, num, errorUrl) {
+    var _className = className || &apos;ec-load-img&apos;, _num = num || 0, _this = this,_errorUrl=errorUrl||null;
+    var oImgLoad = document.getElementsByClassName(_className);
+    for (var i = 0, len = oImgLoad.length; i &lt; len; i++) {
+        //如果图片已经滚动到指定的高度
+        if (document.documentElement.clientHeight + document.documentElement.scrollTop &gt; oImgLoad[i].offsetTop - _num &amp;&amp; !oImgLoad[i].isLoad) {
+            //记录图片是否已经加载
+            oImgLoad[i].isLoad = true;
+            //设置过渡，当图片下来的时候有一个图片透明度变化
+            oImgLoad[i].style.cssText = &quot;transition: &apos;&apos;; opacity: 0;&quot;
+            if (oImgLoad[i].dataset) {
+                this.aftLoadImg(oImgLoad[i], oImgLoad[i].dataset.src, _errorUrl, function (o) {
+                    //添加定时器，确保图片已经加载完了，再把图片指定的的class，清掉，避免重复编辑
+                    setTimeout(function () {
+                        if (o.isLoad) {
+                            _this.removeClass(o, _className);
+                            o.style.cssText = &quot;&quot;;
+                        }
+                    }, 1000)
+                });
+            } else {
+                this.aftLoadImg(oImgLoad[i], oImgLoad[i].getAttribute(&quot;data-src&quot;), _errorUrl, function (o) {
+                    //添加定时器，确保图片已经加载完了，再把图片指定的的class，清掉，避免重复编辑
+                    setTimeout(function () {
+                        if (o.isLoad) {
+                            _this.removeClass(o, _className);
+                            o.style.cssText = &quot;&quot;;
+                        }
+                    }, 1000)
+                });
+            }
+            (function (i) {
+                setTimeout(function () {
+                    oImgLoad[i].style.cssText = &quot;transition:all 1s; opacity: 1;&quot;;
+                }, 16)
+            })(i);
+        }
+    }
+}
+</code></pre><h3 id="获取，设置url参数"><a href="#获取，设置url参数" class="headerlink" title="获取，设置url参数"></a>获取，设置url参数</h3><pre><code>//设置url参数
+//ecDo.setUrlPrmt({&apos;a&apos;:1,&apos;b&apos;:2})
+//result：a=1&amp;b=2
+setUrlPrmt: function (obj) {
+    var _rs = [];
+    for (var p in obj) {
+        if (obj[p] != null &amp;&amp; obj[p] != &apos;&apos;) {
+            _rs.push(p + &apos;=&apos; + obj[p])
+        }
+    }
+    return _rs.join(&apos;&amp;&apos;);
+},
+//获取url参数
+//ecDo.getUrlPrmt(&apos;test.com/write?draftId=122000011938&apos;)
+//result：Object{draftId: &quot;122000011938&quot;}
+getUrlPrmt: function (url) {
+    url = url ? url : window.location.href;
+    var _pa = url.substring(url.indexOf(&apos;?&apos;) + 1),
+        _arrS = _pa.split(&apos;&amp;&apos;),
+        _rs = {};
+    for (var i = 0, _len = _arrS.length; i &lt; _len; i++) {
+        var pos = _arrS[i].indexOf(&apos;=&apos;);
+        if (pos == -1) {
+            continue;
+        }
+        var name = _arrS[i].substring(0, pos),
+            value = window.decodeURIComponent(_arrS[i].substring(pos + 1));
+        _rs[name] = value;
+    }
+    return _rs;
+}
+</code></pre><h3 id="Date日期时间部分"><a href="#Date日期时间部分" class="headerlink" title="Date日期时间部分"></a>Date日期时间部分</h3><pre><code>//到某一个时间的倒计时
+//ecDo.getEndTime(&apos;2017/7/22 16:0:0&apos;)
+//result：&quot;剩余时间6天 2小时 28 分钟20 秒&quot;
+getEndTime: function (endTime) {
+    var startDate = new Date(); //开始时间，当前时间
+    var endDate = new Date(endTime); //结束时间，需传入时间参数
+    var t = endDate.getTime() - startDate.getTime(); //时间差的毫秒数
+    var d = 0,
+        h = 0,
+        m = 0,
+        s = 0;
+    if (t &gt;= 0) {
+        d = Math.floor(t / 1000 / 3600 / 24);
+        h = Math.floor(t / 1000 / 60 / 60 % 24);
+        m = Math.floor(t / 1000 / 60 % 60);
+        s = Math.floor(t / 1000 % 60);
+    }
+    return &quot;剩余时间&quot; + d + &quot;天 &quot; + h + &quot;小时 &quot; + m + &quot; 分钟&quot; + s + &quot; 秒&quot;;
+}
+</code></pre><h3 id="适配rem"><a href="#适配rem" class="headerlink" title="适配rem"></a>适配rem</h3><pre><code>getFontSize: function (_client) {
+    var doc = document,
+        win = window;
+    var docEl = doc.documentElement,
+        resizeEvt = &apos;orientationchange&apos; in window ? &apos;orientationchange&apos; : &apos;resize&apos;,
+        recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            //如果屏幕大于750（750是根据我效果图设置的，具体数值参考效果图），就设置clientWidth=750，防止font-size会超过100px
+            if (clientWidth &gt; _client) {
+                clientWidth = _client
+            }
+            //设置根元素font-size大小
+            docEl.style.fontSize = 100 * (clientWidth / _client) + &apos;px&apos;;
+        };
+    //屏幕大小改变，或者横竖屏切换时，触发函数
+    win.addEventListener(resizeEvt, recalc, false);
+    //文档加载完成时，触发函数
+    doc.addEventListener(&apos;DOMContentLoaded&apos;, recalc, false);
+}
+//ecDo.getFontSize(750)
+//使用方式很简单，比如效果图上，有张图片。宽高都是100px;
+//750是设计图的宽度
+//样式写法就是
+img{
+    width:1rem;
+    height:1rem;
+}
+//这样的设置，比如在屏幕宽度大于等于750px设备上，1rem=100px；图片显示就是宽高都是100px
+//比如在iphone6(屏幕宽度：375)上，375/750*100=50px;就是1rem=50px;图片显示就是宽高都是50px;
+</code></pre><h3 id="手机类型判断"><a href="#手机类型判断" class="headerlink" title="手机类型判断"></a>手机类型判断</h3><pre><code>browserInfo: function (type) {
+    switch (type) {
+        case &apos;android&apos;:
+            return navigator.userAgent.toLowerCase().indexOf(&apos;android&apos;) !== -1
+        case &apos;iphone&apos;:
+            return navigator.userAgent.toLowerCase().indexOf(&apos;iphone&apos;) !== -1
+        case &apos;ipad&apos;:
+            return navigator.userAgent.toLowerCase().indexOf(&apos;ipad&apos;) !== -1
+        case &apos;weixin&apos;:
+            return navigator.userAgent.toLowerCase().indexOf(&apos;micromessenger&apos;) !== -1
+        default:
+            return navigator.userAgent.toLowerCase()
+    }
+}
+</code></pre>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/06/23/性能优化方式/" title= 性能优化 >
+                    <div class="prevTitle">性能优化</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    <!-- 
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:823719082@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/luwenchun" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+     -->
+    <div class="social">黑白中间还有灰，爱恨中间还有泪，你我之间还有谁？</div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#解决移动端300MS的点击延时，依赖fastClick"><span class="toc-number">1.</span> <span class="toc-text">解决移动端300MS的点击延时，依赖fastClick</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#移动端使用rem适配"><span class="toc-number">2.</span> <span class="toc-text">移动端使用rem适配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后台响应状态码容错处理"><span class="toc-number">3.</span> <span class="toc-text">后台响应状态码容错处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局自定义过滤器，业务场景式过滤器在需要的实例处添加"><span class="toc-number">4.</span> <span class="toc-text">全局自定义过滤器，业务场景式过滤器在需要的实例处添加</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#简单封装本地存储及cookie操作"><span class="toc-number">5.</span> <span class="toc-text">简单封装本地存储及cookie操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#截取url参数值"><span class="toc-number">6.</span> <span class="toc-text">截取url参数值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览量"><span class="toc-number">7.</span> <span class="toc-text">浏览量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#日期格式转换"><span class="toc-number">8.</span> <span class="toc-text">日期格式转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图片没加载出来时用一张图片代替"><span class="toc-number"></span> <span class="toc-text">//图片没加载出来时用一张图片代替</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取，设置url参数"><span class="toc-number"></span> <span class="toc-text">获取，设置url参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Date日期时间部分"><span class="toc-number"></span> <span class="toc-text">Date日期时间部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适配rem"><span class="toc-number"></span> <span class="toc-text">适配rem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手机类型判断"><span class="toc-number"></span> <span class="toc-text">手机类型判断</span></a>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 30 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2018/07/22/新公司常见功能函数封装/" >新公司常见功能函数封装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2018/06/23/性能优化方式/" >性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/与原生交互的常见方式/" >与原生交互的常见方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2018/05/19/Linux 基础命令/" >Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/基于gulp的前端脚手架/" >基于gulp的前端脚手架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/vue组件之间的数据传递/" >vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/mongodb使用方法/" >mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/简单实现VUE中的MVVM/" >简单实现VUE中的MVVM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/Javascript之闭包/" >JavaScript之闭包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/25</span><a class="archive-post-title" href= "/2017/12/25/Express中间件/" >Express中间件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2017/11/16/ajax异步问题/" >ajaix异步问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2017/09/15/CSS3动画/" >CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/基于Vue2.0实现后台系统权限控制/" >基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2017/08/15/DOM/" >DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2017/06/15/Git 简单使用说明 /" >Git 简单使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/15</span><a class="archive-post-title" href= "/2017/05/15/Http/" >Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2017/04/15/iconfont字体图片/" >iconfont图片使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2017/03/15/移动端300ms点击延迟和点击穿透/" >移动端300ms点击延迟和点击穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href= "/2017/02/07/引用类型/" >引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2017/01/21/操作DOM常用API总结/" >DOM常见API</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2016/12/19/JSON格式/" >JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2016/12/09/事件/" >JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2016/11/01/常用标签样式重置/" >标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2016/10/19/伪类、伪元素使用说明/" >伪类、伪元素使用说明</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
