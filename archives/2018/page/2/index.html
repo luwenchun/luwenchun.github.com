@@ -291,25 +291,98 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/01/09/koa框架/" >
+            <a class="abstract-title" href = "/2018/04/21/vue组件之间的数据传递/" >
                 
-                    <span>从头实现一个koa框架</span>
+                    <span>vue组件之间的数据传递及共享</span>
             </a>
             <div class="abstract-content">
-                看完之后甚是膜拜，决定收藏记录下，引用地址https://zhuanlan.zhihu.com/p/35040744
-笔者认为，理解koa，主要需要搞懂四条主线，其实也是实现koa的四个步骤，
-   分别是：
-1. 封装node http Server
-2. 构造resquest, response, context对象
-3. 中间件机制
-4. 错误处理
-主线一：封装node http Server: 从hello world说起首先，不考虑框架，如果使用原生http模块来实现一个返回hello world的后端app，代码如下：
-let http = require(&apos;htt...
+                最近在整理项目中代码，在组件之间数据传递遇到了问题，所以做了这次总结，如有不对的地方，望指正。
+父组件如何将数据传到子组件中父组件可以通过Prop传递数据到子组件中。
+这里需要注意的是：
+Prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是反过来不会。这是为了防止子组件无意间修改了父组件的状态，
+来避免应用的数据流变得难以理解。
+
+每次父组件更新时，子组件的所有 Prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop。如果你这么做了，
+Vue 会在控制台给出警告。
+ 在两种情况下，我们很容易忍不住想去修改 prop 中数据：
+1、Prop 作为初始值传入后，...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/09</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/21</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/29/mongodb使用方法/" >
+                
+                    <span>mongodb常用操作指令</span>
+            </a>
+            <div class="abstract-content">
+                1.创建简单mongodb服务器
+mongod --dbpath E:\MongoDB\db
+
+mongo.exe
+
+
+2.数据库操作(CRUD)
+显示数据库名称：show dbs
+
+切换数据库：use &lt;dbname&gt;
+
+删除当前数据库：db.dropDatabase()
+
+想要新建数据库，直接使用use &lt;dbname&gt;,在需要的时候会自动创建
+
+新建表db.&lt;表名&gt;.insert({});数据以json的格式
+
+显示表名 ：show collections
+
+
+
+例子
+
+&gt; use exapmledb
+
+&gt; db.ex_collect...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/09/简单实现VUE中的MVVM/" >
+                
+                    <span>简单实现VUE中的MVVM</span>
+            </a>
+            <div class="abstract-content">
+                defineProperty首先，我们需要了解一下 js 中的一个 API :Object.defineProperty(obj, prop, descriptor)
+一般情况下我们为一个对象添加一个属性一般都会这么写
+let object = {}
+object.test = &apos;test&apos;
+Object.defineProperty 也能做到同样的效果
+let object = {}, test = &apos;test&apos;
+Object.defineProperty(object, &apos;test&apos;, {
+    configurable:...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/09</span>
                 </div>
                 <!-- tags  -->
                 
@@ -335,6 +408,34 @@ var person1 = new Person(‘Jiang’, ‘student’)
 var person2 = new Person(‘X’, ‘Doctor’)
 没有显示的创建对象，使用new来调用这个构造函数，使用new后会自动执行如下操作
 创建一个新对象...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/09</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/01/09/koa框架/" >
+                
+                    <span>从头实现一个koa框架</span>
+            </a>
+            <div class="abstract-content">
+                看完之后甚是膜拜，决定收藏记录下，引用地址https://zhuanlan.zhihu.com/p/35040744
+笔者认为，理解koa，主要需要搞懂四条主线，其实也是实现koa的四个步骤，
+   分别是：
+1. 封装node http Server
+2. 构造resquest, response, context对象
+3. 中间件机制
+4. 错误处理
+主线一：封装node http Server: 从hello world说起首先，不考虑框架，如果使用原生http模块来实现一个返回hello world的后端app，代码如下：
+let http = require(&apos;htt...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -818,7 +919,88 @@ var person2 = new Person(‘X’, ‘Doctor’)
     
     
     
-    <div class="total-archive"> Total : 30 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 33 </div>
     
     <div class="post-archive">
     
@@ -827,6 +1009,21 @@ var person2 = new Person(‘X’, ‘Doctor’)
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2018/09/15/call、apply、bind 的理解与实例/" >call、apply、bind 的理解与实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2018/08/29/async 、await理解/" >理解async/await</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2018/08/08/VUE动态绑定audio/video的src不能播放/" >VUE动态绑定audio/video的src不能播放</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -855,12 +1052,12 @@ var person2 = new Person(‘X’, ‘Doctor’)
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
         </li>
     
     
@@ -880,12 +1077,12 @@ var person2 = new Person(‘X’, ‘Doctor’)
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
         </li>
     
     
@@ -914,12 +1111,12 @@ var person2 = new Person(‘X’, ‘Doctor’)
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
         </li>
     
     

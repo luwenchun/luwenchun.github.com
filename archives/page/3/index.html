@@ -291,6 +291,90 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2017/09/15/CSS3动画/" >
+                
+                    <span>CSS3 动画</span>
+            </a>
+            <div class="abstract-content">
+                 CSS3 可以实现动画，代替原来的 Flash 和 JavaScript 方案。
+ css动画分为CSS Transition和 CSS Animation
+CSS Transition过渡语法
+transition： CSS属性，花费时间，效果曲线(默认ease)，延迟时间(默认0)
+/*宽度从原始值到制定值的一个过渡，运动曲线ease,运动时间0.5秒，0.2秒后执行过渡*/
+transition：width,.5s,ease,.2s
+/*所有属性从原始值到制定值的一个过渡，运动曲线ease,运动时间0.5秒*/
+transition：all,.5s
+ 上面栗子是简写模式，也可以分...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/09/15</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/08/23/基于Vue2.0实现后台系统权限控制/" >
+                
+                    <span>基于Vue2.0实现后台系统权限控制</span>
+            </a>
+            <div class="abstract-content">
+                项目背景:现有一个后台管理系统，共存在两种类型的人员
+①超级管理员（称作admin），②普通用户（称作editor）
+每种类型的人看到的操作栏并不一样，可以进行的操作也不尽相同，于是就需要程序处理一下各个权限问题。
+具体实现思路1 创建vue实例的时候将vue-router挂载，但这个时候vue-router挂载一些登录或者不用权限的公用的页面。
+2 当用户登录后，获取用role，将role和路由表每个页面的需要的权限作比较，生成最终用户可访问的路由表。
+3 调用router.addRoutes(store.getters.addRouters)添加用户可访问的路由。
+4 使用vuex管...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/23</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/08/15/DOM/" >
+                
+                    <span>DOM</span>
+            </a>
+            <div class="abstract-content">
+                DOM对象节点层次
+文档节点 document 是每个文档的根节点。文档节点只有一个子节点，即 &lt;html&gt; 元素,称之为文档元素。在 HTML 中，文档元素始终是&lt;html&gt;元素。
+HTML 元素通过元素节点表示，特性通过特性节点表示，文档类型通过文档类型节点表示，注释则通过注释节点表示。总共有12种节点类型，这些类型都继承于一个基类型。
+
+Node 类型
+每个节点都有一个 nodeType 属性，用于表明节点类型。12个数值常量表示，任何节点类型必居其一。例如：
+
+
+Node.ELEMENT_NODE(1)
+Node.ATTRIBUTE_NODE(2)
+Nod...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/15</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2017/06/15/Git 简单使用说明 /" >
                 
                     <span>Git 简单使用说明</span>
@@ -473,95 +557,10 @@ js 对象字...
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/12/09/事件/" >
-                
-                    <span>JS事件</span>
-            </a>
-            <div class="abstract-content">
-                冒泡和捕获阶段
-
-一图流解释：IE 事件流叫做事件冒泡，从元素逐级向上传递，所有现代浏览器支持事件冒泡。
-事件捕获是网景团队提出，虽然规范要求应该从 document 对象开始，但浏览器基本都从 window 对象开始。特殊需求才会使用。
-
-目标阶段
-需要注意的是，你以为点击蚊子，事件目标节点在div上，其实实际触发会在最深的节点，比如 p 或者 span 等子节点上。
-
-DOM 事件流
-DOM2级事件规定的事件流包括三个阶段：事件捕获，目标事件阶段和事件冒泡阶段。
-规范要求：捕获阶段不触发目标元素事件，然后目标事件处理，再进行冒泡阶段。
-然而多数浏览器在捕获阶段也实现了目标元素事件，导...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/12/09</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/01/常用标签样式重置/" >
-                
-                    <span>标签样式重置</span>
-            </a>
-            <div class="abstract-content">
-                美化input框/*在IE10+浏览器中, 使用css即可隐藏input文本输入框右侧的叉号*/
-input[type=text]::-ms-clear,::-ms-reveal{display:none;}
-input::-ms-clear,::-ms-reveal{display:none;}
-input{
-    /*去除点击出现轮廓颜色*/
-    outline: none;
-    -webkit-appearance: none; /*去除系统默认的样式，苹果手机上的阴影*/
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/01</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/10/19/伪类、伪元素使用说明/" >
-                
-                    <span>伪类、伪元素使用说明</span>
-            </a>
-            <div class="abstract-content">
-                伪类、伪元素配合CSS3可以完成非常多有意思的效果，为方便个人开发时候的快速查阅，记录了以下常用到的一些伪类伪元素的简要中文说明；
-简单区分：
-:Pseudo-classes        伪类:DOM在不同状态、不同位置下的特殊效果；
-::Pseudo-elements    伪元素：DOM按匹配规则伪造出的元素；
-注意点：
-伪类添加的内容元素或伪类效果通在DOM的源代码中是看不见的，需要借助开发者工具才能看见;
-使用屏幕阅读器等设备无法访问和读取伪元素生成的内容。因此不应该使用伪元素来添加正文内容等重要信息到页面上展示，应确保主体内容的完整性。
-伪类添加的元素也可以使用CSS样式进行...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/10/19</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
+        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1030,7 +1029,88 @@ input{
     
     
     
-    <div class="total-archive"> Total : 30 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 33 </div>
     
     <div class="post-archive">
     
@@ -1039,6 +1119,21 @@ input{
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2018/09/15/call、apply、bind 的理解与实例/" >call、apply、bind 的理解与实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2018/08/29/async 、await理解/" >理解async/await</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2018/08/08/VUE动态绑定audio/video的src不能播放/" >VUE动态绑定audio/video的src不能播放</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1067,12 +1162,12 @@ input{
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
         </li>
     
     
@@ -1092,12 +1187,12 @@ input{
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
         </li>
     
     
@@ -1126,12 +1221,12 @@ input{
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
         </li>
     
     

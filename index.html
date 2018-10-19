@@ -304,6 +304,85 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/09/15/call、apply、bind 的理解与实例/" >
+                
+                    <span>call、apply、bind 的理解与实例</span>
+            </a>
+            <div class="abstract-content">
+                call/apply 可以改变函数的this指向。 除了传递参数时有所差别，call和apply作用完全一样。
+12345678910111213141516var tim = &#123;     name: 'tim',     age: 20,     getName: function() &#123;        console.log(this.name);        return this.name;     &#125;&#125;var jake = &#123; name: 'jake', age: 20 &#125;tim.getName(); // tim/...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/15</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/08/29/async 、await理解/" >
+                
+                    <span>理解async/await</span>
+            </a>
+            <div class="abstract-content">
+                CallBacks回调函数就是函数A作为参数传递给函数B，并且在未来某一个时间被调用。callback的异步模式最大的问题就是，理解困难加回调地狱（callback hell），看下面的代码的执行顺序：
+A();
+ajax(&apos;url1&apos;, function(){
+    B();
+    ajax(&apos;url2&apos;, function(){
+        C();
+    }
+    D();
+});
+E();
+其执行顺序为：A =&gt; E =&gt; B =&gt; D =&gt; C，这种执行顺序的确会让人头脑发昏，另外由于由于多个异步操作之...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/29</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/08/08/VUE动态绑定audio/video的src不能播放/" >
+                
+                    <span>VUE动态绑定audio/video的src不能播放</span>
+            </a>
+            <div class="abstract-content">
+                前几天写个项目，要求要本地上传音视频至服务器，再回显可播放。心想这简单啊，直接vue双向绑定不就轻松解决，没想到遇到个大坑~
+&lt;audio controls&gt;
+&lt;source :src=&quot;audio_url&quot;&gt;
+您的浏览器不支持 audio 元素。
+&lt;/audio&gt;
+this.audio_url = res.data.audio_url
+结果音频并不能播放，于是就找度娘，很多说赋值完成后要重新用js控制播放器播放，像这样。。
+let dom = document.getElementById(&apos;audio&apos;);
+...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/08</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/07/22/新公司常见功能函数封装/" >
                 
                     <span>新公司常见功能函数封装</span>
@@ -444,33 +523,6 @@ gu...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/01/vue项目实现记住密码到cookie功能/" >
-                
-                    <span>vue项目实现记住密码到cookie功能</span>
-            </a>
-            <div class="abstract-content">
-                
-实现功能：1.记住密码勾选，点登陆时，将账号和密码保存到cookie，下次登陆自动显示到表单内 2.不勾选，点登陆时候则清空之前保存到cookie的值，下次登陆需要手动输入
-
-大体思路就是通过存/取/删cookie实现的；每次进入登录页，先去读取cookie，如果浏览器的cookie中有账号信息，就自动填充到登录框中，存cookie是在登录成功之后，判断当前用户是否勾选了记住密码，如果勾选了，则把账号信息存到cookie当中，效果图如上：
-
-html代码
-&lt;div class=&quot;ms-login&quot;&gt;
-        &lt;el-form :model=...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/01</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/01/前端自动化环境构建/" >
                 
                     <span>前端自动化构建环境的搭建</span>
@@ -507,98 +559,24 @@ Webpack最年轻，擅长用于依赖管理，配置稍较复杂
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/21/vue组件之间的数据传递/" >
+            <a class="abstract-title" href = "/2018/05/01/vue项目实现记住密码到cookie功能/" >
                 
-                    <span>vue组件之间的数据传递及共享</span>
+                    <span>vue项目实现记住密码到cookie功能</span>
             </a>
             <div class="abstract-content">
-                最近在整理项目中代码，在组件之间数据传递遇到了问题，所以做了这次总结，如有不对的地方，望指正。
-父组件如何将数据传到子组件中父组件可以通过Prop传递数据到子组件中。
-这里需要注意的是：
-Prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是反过来不会。这是为了防止子组件无意间修改了父组件的状态，
-来避免应用的数据流变得难以理解。
+                
+实现功能：1.记住密码勾选，点登陆时，将账号和密码保存到cookie，下次登陆自动显示到表单内 2.不勾选，点登陆时候则清空之前保存到cookie的值，下次登陆需要手动输入
 
-每次父组件更新时，子组件的所有 Prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop。如果你这么做了，
-Vue 会在控制台给出警告。
- 在两种情况下，我们很容易忍不住想去修改 prop 中数据：
-1、Prop 作为初始值传入后，...
+大体思路就是通过存/取/删cookie实现的；每次进入登录页，先去读取cookie，如果浏览器的cookie中有账号信息，就自动填充到登录框中，存cookie是在登录成功之后，判断当前用户是否勾选了记住密码，如果勾选了，则把账号信息存到cookie当中，效果图如上：
+
+html代码
+&lt;div class=&quot;ms-login&quot;&gt;
+        &lt;el-form :model=...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/21</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/29/mongodb使用方法/" >
-                
-                    <span>mongodb常用操作指令</span>
-            </a>
-            <div class="abstract-content">
-                1.创建简单mongodb服务器
-mongod --dbpath E:\MongoDB\db
-
-mongo.exe
-
-
-2.数据库操作(CRUD)
-显示数据库名称：show dbs
-
-切换数据库：use &lt;dbname&gt;
-
-删除当前数据库：db.dropDatabase()
-
-想要新建数据库，直接使用use &lt;dbname&gt;,在需要的时候会自动创建
-
-新建表db.&lt;表名&gt;.insert({});数据以json的格式
-
-显示表名 ：show collections
-
-
-
-例子
-
-&gt; use exapmledb
-
-&gt; db.ex_collect...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/09/简单实现VUE中的MVVM/" >
-                
-                    <span>简单实现VUE中的MVVM</span>
-            </a>
-            <div class="abstract-content">
-                defineProperty首先，我们需要了解一下 js 中的一个 API :Object.defineProperty(obj, prop, descriptor)
-一般情况下我们为一个对象添加一个属性一般都会这么写
-let object = {}
-object.test = &apos;test&apos;
-Object.defineProperty 也能做到同样的效果
-let object = {}, test = &apos;test&apos;
-Object.defineProperty(object, &apos;test&apos;, {
-    configurable:...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/09</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/01</span>
                 </div>
                 <!-- tags  -->
                 
@@ -608,7 +586,7 @@ Object.defineProperty(object, &apos;test&apos;, {
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -684,6 +662,10 @@ Object.defineProperty(object, &apos;test&apos;, {
             
                 <span>
                     <a href= //github.com/luwenchun/familydoctor target="_black">北京家庭医生</a>
+                </span>
+            
+                <span>
+                    <a href= //https://github.com/luwenchun target="_black">上汽荣威</a>
                 </span>
             
         </div>
@@ -1158,7 +1140,88 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     
     
-    <div class="total-archive"> Total : 30 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 33 </div>
     
     <div class="post-archive">
     
@@ -1167,6 +1230,21 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2018/09/15/call、apply、bind 的理解与实例/" >call、apply、bind 的理解与实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2018/08/29/async 、await理解/" >理解async/await</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2018/08/08/VUE动态绑定audio/video的src不能播放/" >VUE动态绑定audio/video的src不能播放</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1195,12 +1273,12 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/vue项目实现记住密码到cookie功能/" >vue项目实现记住密码到cookie功能</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/前端自动化环境构建/" >前端自动化构建环境的搭建</a>
         </li>
     
     
@@ -1220,12 +1298,12 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/koa框架/" >从头实现一个koa框架</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2018/01/09/JAVASCRIPT对象/" >JavaScript创建对象和实现继承</a>
         </li>
     
     
@@ -1254,12 +1332,12 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BOM/" >BOM</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/BFC问题/" >BFC</a>
         </li>
     
     
