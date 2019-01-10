@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>前端进阶之路 · bigdeal&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180226" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css?v=20180226" media="(max-width: 980px)">
+    <link rel="icon" href="/assets/favicon.ico">
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">bigdeal&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">前端进阶之路</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">bigdeal's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            前端进阶之路
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/12/10</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="Vue官方脚手架Vue-cli3脚手架使用"><a href="#Vue官方脚手架Vue-cli3脚手架使用" class="headerlink" title="Vue官方脚手架Vue-cli3脚手架使用"></a>Vue官方脚手架Vue-cli3脚手架使用</h3><p><a href="http://www.cnblogs.com/hongdiandian/p/8311645.html" target="_blank" rel="noopener">http://www.cnblogs.com/hongdiandian/p/8311645.html</a></p>
+<h3 id="Vue模板语法"><a href="#Vue模板语法" class="headerlink" title="Vue模板语法"></a>Vue模板语法</h3><p><a href="https://cn.vuejs.org/v2/guide/render-function.html" target="_blank" rel="noopener">https://cn.vuejs.org/v2/guide/render-function.html</a></p>
+<h3 id="Vue组件化"><a href="#Vue组件化" class="headerlink" title="Vue组件化"></a>Vue组件化</h3><p>1.如何编写单文件组件<br><a href="https://cn.vuejs.org/v2/guide/single-file-components.html#%E6%80%8E%E4%B9%88%E7%9C%8B%E5%BE%85%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB%EF%BC%9F" target="_blank" rel="noopener">https://cn.vuejs.org/v2/guide/single-file-components.html#%E6%80%8E%E4%B9%88%E7%9C%8B%E5%BE%85%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB%EF%BC%9F</a><br>2。如何编写高阶组件<br><a href="https://segmentfault.com/a/1190000010371752" target="_blank" rel="noopener">https://segmentfault.com/a/1190000010371752</a><br>3.如何编写高质量的UI组件<br><a href="https://www.cnblogs.com/kingboy2008/p/9236226.html" target="_blank" rel="noopener">https://www.cnblogs.com/kingboy2008/p/9236226.html</a></p>
+<h3 id="前端模块系统"><a href="#前端模块系统" class="headerlink" title="前端模块系统"></a>前端模块系统</h3><p>1.ES6 Module模块化<br><a href="https://www.jianshu.com/p/29f89e8b9cb6" target="_blank" rel="noopener">https://www.jianshu.com/p/29f89e8b9cb6</a><br>2.AMD CMD Commonjs区别<br><a href="https://www.jianshu.com/p/3576ccc68cb7" target="_blank" rel="noopener">https://www.jianshu.com/p/3576ccc68cb7</a></p>
+<h3 id="Vue-devtools开发调试插件"><a href="#Vue-devtools开发调试插件" class="headerlink" title="Vue-devtools开发调试插件"></a>Vue-devtools开发调试插件</h3><h3 id="计算属性-表单处理-事件处理"><a href="#计算属性-表单处理-事件处理" class="headerlink" title="计算属性 表单处理 事件处理"></a>计算属性 表单处理 事件处理</h3><h3 id="ES6-Promise处理异步"><a href="#ES6-Promise处理异步" class="headerlink" title="ES6 Promise处理异步"></a>ES6 Promise处理异步</h3><p><a href="https://www.cnblogs.com/guoyeqiang/p/8243838.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyeqiang/p/8243838.html</a></p>
+<h3 id="ES7-异步终极解决方案-Async-await"><a href="#ES7-异步终极解决方案-Async-await" class="headerlink" title="ES7 异步终极解决方案 Async+await"></a>ES7 异步终极解决方案 Async+await</h3><p><a href="https://blog.csdn.net/tongshuo_11/article/details/68491434" target="_blank" rel="noopener">https://blog.csdn.net/tongshuo_11/article/details/68491434</a></p>
+<h3 id="Vue的UI组件选型"><a href="#Vue的UI组件选型" class="headerlink" title="Vue的UI组件选型"></a>Vue的UI组件选型</h3><h3 id="组件布局"><a href="#组件布局" class="headerlink" title="组件布局"></a>组件布局</h3><h3 id="Vuex状态管理"><a href="#Vuex状态管理" class="headerlink" title="Vuex状态管理"></a>Vuex状态管理</h3><p>1.Vuex数据管理<br>2.核心组件State<br>3.核心组件Getter<br>4.核心组件Mutation<br>5。核心组件Module<br>6。核心组件Action<br>7.复杂项目中的数据流设计<br>8.数据持久化</p>
+<h3 id="Vue-router在单页面SPA应用"><a href="#Vue-router在单页面SPA应用" class="headerlink" title="Vue-router在单页面SPA应用"></a>Vue-router在单页面SPA应用</h3><p>1.多页面到单页面（SPA）发展<br>2.路由管理<br>3.路由重定向<br>4.路由嵌套<br>5.路由守卫<br>6.路由懒加载</p>
+<h3 id="Vuejs核心原理剖析"><a href="#Vuejs核心原理剖析" class="headerlink" title="Vuejs核心原理剖析"></a>Vuejs核心原理剖析</h3><h3 id="react16-7"><a href="#react16-7" class="headerlink" title="react16.7"></a>react16.7</h3><p>1.React官方脚手架Creat-react-app<br>2.ES6面向对象Class语法<br>3.JSX使用<br>vue中jsx的使用<br><a href="https://juejin.im/post/5b221e2951882574aa5f4c5a" target="_blank" rel="noopener">https://juejin.im/post/5b221e2951882574aa5f4c5a</a><br>4.虚拟DOM原理剖析<br><a href="https://cloud.tencent.com/developer/article/1006029" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1006029</a><br>5.setState数据管理<br><a href="https://www.cnblogs.com/feiyu6/p/9202873.html" target="_blank" rel="noopener">https://www.cnblogs.com/feiyu6/p/9202873.html</a><br>6.react组件化思想<br><a href="https://code.mforever78.com/front-end/2015/08/24/thinking-in-react-component/" target="_blank" rel="noopener">https://code.mforever78.com/front-end/2015/08/24/thinking-in-react-component/</a><br>7.react组件参数传递和校验<br><!-- 校验 --><br><a href="https://blog.csdn.net/gxf_ming/article/details/62891760" target="_blank" rel="noopener">https://blog.csdn.net/gxf_ming/article/details/62891760</a><br>组件传值，父子，全局bus，发布订阅<br><a href="https://www.oecom.cn/communication-between-react-components/" target="_blank" rel="noopener">https://www.oecom.cn/communication-between-react-components/</a></p>
+<p>8.不可变数据结构Immutablejs</p>
+<p>浅拷贝深拷贝动态控制拷贝<br><a href="https://github.com/sunyongjian/blog/issues/33">https://github.com/sunyongjian/blog/issues/33</a><br>Immutablejs使用说明<br><a href="https://juejin.im/post/5ae91f1e6fb9a07a9d702255" target="_blank" rel="noopener">https://juejin.im/post/5ae91f1e6fb9a07a9d702255</a><br>创建新的数据对象并不会触发state从新渲染<br><a href="https://www.zhihu.com/question/297323663/answer/504587178" target="_blank" rel="noopener">https://www.zhihu.com/question/297323663/answer/504587178</a></p>
+<p>9.react表单处理<br><a href="https://segmentfault.com/a/1190000004696515" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004696515</a><br>10.EA6箭头函数<br><a href="https://github.com/youngwind/blog/issues/14">https://github.com/youngwind/blog/issues/14</a><br>11.ES6数组<br><a href="http://es6.ruanyifeng.com/#docs/array" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/array</a><br>12.ES6数据表格<br><a href="http://es6.ruanyifeng.com/#docs/array" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/array</a><br>13.react动画<br><a href="https://segmentfault.com/a/1190000007388260" target="_blank" rel="noopener">https://segmentfault.com/a/1190000007388260</a><br><a href="https://zhuanlan.zhihu.com/p/28536964" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28536964</a><br>14.react生命周期<br><a href="https://juejin.im/post/5a062fb551882535cd4a4ce3" target="_blank" rel="noopener">https://juejin.im/post/5a062fb551882535cd4a4ce3</a><br>15.react错误处理周期<br><a href="https://www.zcfy.cc/article/error-handling-in-react-16-react-blog" target="_blank" rel="noopener">https://www.zcfy.cc/article/error-handling-in-react-16-react-blog</a><br><a href="http://blog.codingplayboy.com/2017/11/10/react-error-handle/" target="_blank" rel="noopener">http://blog.codingplayboy.com/2017/11/10/react-error-handle/</a><br><a href="https://zhuanlan.zhihu.com/p/28156587" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28156587</a><br>16.react fiber架构剖析<br>解决的问题<br><a href="https://juejin.im/entry/5b0245486fb9a07ac23b08ab" target="_blank" rel="noopener">https://juejin.im/entry/5b0245486fb9a07ac23b08ab</a><br>原理解析<br><a href="https://juejin.im/post/5b7016606fb9a0099406f8de" target="_blank" rel="noopener">https://juejin.im/post/5b7016606fb9a0099406f8de</a><br>17.react新功能之Hooks<br><a href="https://juejin.im/post/5bebd46251882527796a95cc" target="_blank" rel="noopener">https://juejin.im/post/5bebd46251882527796a95cc</a></p>
+<h3 id="ant-design组件使用经验"><a href="#ant-design组件使用经验" class="headerlink" title="ant-design组件使用经验"></a>ant-design组件使用经验</h3><h3 id="Redux状态管理"><a href="#Redux状态管理" class="headerlink" title="Redux状态管理"></a>Redux状态管理</h3><p>1.setState和属性传递管理数据的不足<br>2.单向数据量VS双向数据流<br>3.Redux核心组件之Action<br>4.redux核心组件之reducer<br>5.redux核心组件之dispatch<br>6.react-redux连接redux和react<br>7.react-redux核心组件Provider和connect<br>8.redux之中间件剖析<br>9.redux-thunk中间件处理异步任务</p>
+<h3 id="react-router4单页面SPA应用"><a href="#react-router4单页面SPA应用" class="headerlink" title="react-router4单页面SPA应用"></a>react-router4单页面SPA应用</h3><p>1.路由管理<br>2.路由和组件<br>3.路由重定向<br>4.生命周期<br>5.react路由懒加载</p>
+<h3 id="redux解决方案dva"><a href="#redux解决方案dva" class="headerlink" title="redux解决方案dva"></a>redux解决方案dva</h3><p>1.dva是什么<br>2.ES6之generator<br>3.redux-saga中间件</p>
+<h3 id="react虚拟DOM原理"><a href="#react虚拟DOM原理" class="headerlink" title="react虚拟DOM原理"></a>react虚拟DOM原理</h3><h3 id="react和vue差异比较"><a href="#react和vue差异比较" class="headerlink" title="react和vue差异比较"></a>react和vue差异比较</h3><h3 id="Nodejs核心模块"><a href="#Nodejs核心模块" class="headerlink" title="Nodejs核心模块"></a>Nodejs核心模块</h3><p>1.nodejs模块化VS ES6模块化<br>2.Node流<br>3.Buffer</p>
+<h3 id="Nodejs异步"><a href="#Nodejs异步" class="headerlink" title="Nodejs异步"></a>Nodejs异步</h3><p>1。Events<br>2.Timer<br>3.Event-loop</p>
+<h3 id="Nodejs进程"><a href="#Nodejs进程" class="headerlink" title="Nodejs进程"></a>Nodejs进程</h3><p>1.进程与线程<br>2.cluster</p>
+<h3 id="Nodejs-io网络"><a href="#Nodejs-io网络" class="headerlink" title="Nodejs io网络"></a>Nodejs io网络</h3><p>1.nodejs IO（fs、net、stream模块）<br>2.TCP/IP协议<br>3.Http2.0<br>4.https<br>5.前端跨域问题解决方案<br><a href="https://juejin.im/post/5c35f6286fb9a049be5dad82" target="_blank" rel="noopener">https://juejin.im/post/5c35f6286fb9a049be5dad82</a></p>
+<h3 id="常见数据库缓存解决方案"><a href="#常见数据库缓存解决方案" class="headerlink" title="常见数据库缓存解决方案"></a>常见数据库缓存解决方案</h3><p>1.选型策略<br>2.爬虫项目数据持久化<br>mysql<br>mongodb<br>redis</p>
+<h3 id="web开发"><a href="#web开发" class="headerlink" title="web开发"></a>web开发</h3><p>1、传统MIS 包含用户状态管理、信息查询录入<br>2、ant-design-pro开发企业级管理后台<br>3、web框架选型策略<br>4、基于Express、Koa进行比较，以及他们的衍生品egg.js</p>
+<h3 id="同构应用"><a href="#同构应用" class="headerlink" title="同构应用"></a>同构应用</h3><p>1、传统渲染模式与新时期的服务端渲染和同构开发</p>
+<h3 id="部署运维"><a href="#部署运维" class="headerlink" title="部署运维"></a>部署运维</h3><p>1、node.js部署和运维<br>2、nginx + pm2部署web应用实战</p>
+<h3 id="微信小程序"><a href="#微信小程序" class="headerlink" title="微信小程序"></a>微信小程序</h3><p>1、小程序开发模式VS传统Web开发模式<br>2、flex布局<br>3、扫码<br>4、下拉刷新<br>5、轮播图<br>6、图片<br>7、支付API</p>
+<h3 id="小程序生态"><a href="#小程序生态" class="headerlink" title="小程序生态"></a>小程序生态</h3><p>1、小程序适用场景<br>2、快应用、百度小程序、支付宝小程序<br>3、一套代码编译各大厂商小程序：taro、mpvue</p>
+<h3 id="微信开发"><a href="#微信开发" class="headerlink" title="微信开发"></a>微信开发</h3><p>1、服务器如何介入微信后台<br>2、node.js后台接入<br>3、微信消息管理</p>
+<h3 id="微信网页开发"><a href="#微信网页开发" class="headerlink" title="微信网页开发"></a>微信网页开发</h3><p>1、依赖微信JSSDK开发业务<br>2、录音、地理位置、扫一扫</p>
+<h3 id="公众号客服机器人"><a href="#公众号客服机器人" class="headerlink" title="公众号客服机器人"></a>公众号客服机器人</h3><h3 id="react-native"><a href="#react-native" class="headerlink" title="react-native"></a>react-native</h3><p>1、react-nativeVS传统ios和安卓开发模式<br>2、react-native核心api和组件实战<br>3、react-native网络请求</p>
+<h3 id="react-native组件库和第三方UI组件库"><a href="#react-native组件库和第三方UI组件库" class="headerlink" title="react-native组件库和第三方UI组件库"></a>react-native组件库和第三方UI组件库</h3><p>1、ant-design-mobile的react-native版本<br>2、react-navagation导航</p>
+<h3 id="react-native数据路由管理"><a href="#react-native数据路由管理" class="headerlink" title="react-native数据路由管理"></a>react-native数据路由管理</h3><p>1、单页面应用<br>2、redux管理数据<br>3、react-router路由</p>
+<h3 id="移动App版实战和发布"><a href="#移动App版实战和发布" class="headerlink" title="移动App版实战和发布"></a>移动App版实战和发布</h3><h3 id="Wbe安全实战"><a href="#Wbe安全实战" class="headerlink" title="Wbe安全实战"></a>Wbe安全实战</h3><p>1、安全意义与常见web项目相关的漏洞原理解析与防御<br>2、Xss漏洞<br>3、CSRF漏洞<br>4、SQL注入<br>5、cookie安全策略<br>6、点击劫持<br>7、传输安全和HTTPS加密</p>
+<h3 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h3><p>1、前端工程化发展历史<br>2、前端生态工具：webpack、babel、eslint、webpack进阶<br>3、webpack常见优化<br>4、定制自己的loader<br>5、定制自己的plugin<br>6、babel进阶和编译优化处理<br>7、代码审查进阶</p>
+<h3 id="错误监控📱📱收集"><a href="#错误监控📱📱收集" class="headerlink" title="错误监控📱📱收集"></a>错误监控📱📱收集</h3><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>1、单元测试<br>2、业务驱动开发&amp;&amp;测试驱动开发<br>3、黑盒测试和白盒测试<br>4、测试覆盖率<br>5、前端项目的单测集成<br>6、node项目的单测集成</p>
+<h3 id="前端e2e测试"><a href="#前端e2e测试" class="headerlink" title="前端e2e测试"></a>前端e2e测试</h3><h3 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h3><p>1、性能指标<br>2、业务场景<br>3、基于项目获取性能报告和报告背后的分析<br>4、浏览器重绘和回流<br>5、节流设计<br>6、资源加载与利用（懒加载、高效缓存、CDN）<br>7、浏览器缓存<br>8、移动端网络性能优化<br>9、nginx调优</p>
+<h3 id="更快的代码"><a href="#更快的代码" class="headerlink" title="更快的代码"></a>更快的代码</h3><p>1、BOM/DOM交互优化<br>2、常见写法优化</p>
+<h3 id="react性能优化"><a href="#react性能优化" class="headerlink" title="react性能优化"></a>react性能优化</h3><p>1、react常用性能优化策略<br>2、purecomponent</p>
+<h3 id="Vue常用性能优化策略"><a href="#Vue常用性能优化策略" class="headerlink" title="Vue常用性能优化策略"></a>Vue常用性能优化策略</h3><h3 id="浏览器原理"><a href="#浏览器原理" class="headerlink" title="浏览器原理"></a>浏览器原理</h3><p>1、webkit缓存加载机制<br>2、cookie和session实现原理<br>3、DOM模型<br>4、css解释器<br>5、构建渲染树</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2018/11/22/39新公司常见功能函数封装/" title="新公司常见功能函数封装">
+                    <div class="prevTitle">新公司常见功能函数封装</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    <!-- 
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:823719082@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/luwenchun" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+     -->
+    <div class="social">黑白中间还有灰，爱恨中间还有泪，你我之间还有谁？</div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue官方脚手架Vue-cli3脚手架使用"><span class="toc-number">1.</span> <span class="toc-text">Vue官方脚手架Vue-cli3脚手架使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue模板语法"><span class="toc-number">2.</span> <span class="toc-text">Vue模板语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue组件化"><span class="toc-number">3.</span> <span class="toc-text">Vue组件化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端模块系统"><span class="toc-number">4.</span> <span class="toc-text">前端模块系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-devtools开发调试插件"><span class="toc-number">5.</span> <span class="toc-text">Vue-devtools开发调试插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算属性-表单处理-事件处理"><span class="toc-number">6.</span> <span class="toc-text">计算属性 表单处理 事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6-Promise处理异步"><span class="toc-number">7.</span> <span class="toc-text">ES6 Promise处理异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES7-异步终极解决方案-Async-await"><span class="toc-number">8.</span> <span class="toc-text">ES7 异步终极解决方案 Async+await</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue的UI组件选型"><span class="toc-number">9.</span> <span class="toc-text">Vue的UI组件选型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件布局"><span class="toc-number">10.</span> <span class="toc-text">组件布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex状态管理"><span class="toc-number">11.</span> <span class="toc-text">Vuex状态管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-router在单页面SPA应用"><span class="toc-number">12.</span> <span class="toc-text">Vue-router在单页面SPA应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuejs核心原理剖析"><span class="toc-number">13.</span> <span class="toc-text">Vuejs核心原理剖析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react16-7"><span class="toc-number">14.</span> <span class="toc-text">react16.7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ant-design组件使用经验"><span class="toc-number">15.</span> <span class="toc-text">ant-design组件使用经验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redux状态管理"><span class="toc-number">16.</span> <span class="toc-text">Redux状态管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-router4单页面SPA应用"><span class="toc-number">17.</span> <span class="toc-text">react-router4单页面SPA应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redux解决方案dva"><span class="toc-number">18.</span> <span class="toc-text">redux解决方案dva</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react虚拟DOM原理"><span class="toc-number">19.</span> <span class="toc-text">react虚拟DOM原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react和vue差异比较"><span class="toc-number">20.</span> <span class="toc-text">react和vue差异比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nodejs核心模块"><span class="toc-number">21.</span> <span class="toc-text">Nodejs核心模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nodejs异步"><span class="toc-number">22.</span> <span class="toc-text">Nodejs异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nodejs进程"><span class="toc-number">23.</span> <span class="toc-text">Nodejs进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nodejs-io网络"><span class="toc-number">24.</span> <span class="toc-text">Nodejs io网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见数据库缓存解决方案"><span class="toc-number">25.</span> <span class="toc-text">常见数据库缓存解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web开发"><span class="toc-number">26.</span> <span class="toc-text">web开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同构应用"><span class="toc-number">27.</span> <span class="toc-text">同构应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署运维"><span class="toc-number">28.</span> <span class="toc-text">部署运维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信小程序"><span class="toc-number">29.</span> <span class="toc-text">微信小程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小程序生态"><span class="toc-number">30.</span> <span class="toc-text">小程序生态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信开发"><span class="toc-number">31.</span> <span class="toc-text">微信开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信网页开发"><span class="toc-number">32.</span> <span class="toc-text">微信网页开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公众号客服机器人"><span class="toc-number">33.</span> <span class="toc-text">公众号客服机器人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-native"><span class="toc-number">34.</span> <span class="toc-text">react-native</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-native组件库和第三方UI组件库"><span class="toc-number">35.</span> <span class="toc-text">react-native组件库和第三方UI组件库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-native数据路由管理"><span class="toc-number">36.</span> <span class="toc-text">react-native数据路由管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移动App版实战和发布"><span class="toc-number">37.</span> <span class="toc-text">移动App版实战和发布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wbe安全实战"><span class="toc-number">38.</span> <span class="toc-text">Wbe安全实战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端工程化"><span class="toc-number">39.</span> <span class="toc-text">前端工程化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误监控📱📱收集"><span class="toc-number">40.</span> <span class="toc-text">错误监控📱📱收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动化测试"><span class="toc-number">41.</span> <span class="toc-text">自动化测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端e2e测试"><span class="toc-number">42.</span> <span class="toc-text">前端e2e测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端性能优化"><span class="toc-number">43.</span> <span class="toc-text">前端性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更快的代码"><span class="toc-number">44.</span> <span class="toc-text">更快的代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react性能优化"><span class="toc-number">45.</span> <span class="toc-text">react性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue常用性能优化策略"><span class="toc-number">46.</span> <span class="toc-text">Vue常用性能优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器原理"><span class="toc-number">47.</span> <span class="toc-text">浏览器原理</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 34 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/10</span><a class="archive-post-title" href="/2018/12/10/45前端进阶之路/">前端进阶之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/22</span><a class="archive-post-title" href="/2018/11/22/39新公司常见功能函数封装/">新公司常见功能函数封装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href="/2018/09/15/32call、apply、bind 的理解与实例/">call、apply、bind 的理解与实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href="/2018/08/29/37async 、await理解/">理解async/await</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href="/2018/08/08/20video的src不能播放/">VUE动态绑定audio/video的src不能播放</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2018/06/23/41性能优化方式/">性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2018/06/11/44与原生交互的常见方式/">与原生交互的常见方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href="/2018/05/19/6Linux 基础命令/">Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2018/05/02/12基于gulp的前端脚手架/">基于gulp的前端脚手架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2018/05/01/28前端自动化环境构建/">前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2018/05/01/21vue项目实现记住密码到cookie功能/">vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2018/04/21/33vue组件之间的数据传递/">vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href="/2018/03/29/27mongodb使用方法/">mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href="/2018/03/09/43简单实现VUE中的MVVM/">简单实现VUE中的MVVM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/42Javascript之闭包/">JavaScript之闭包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/25</span><a class="archive-post-title" href="/2017/12/25/26Express中间件/">Express中间件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href="/2017/11/16/38ajax异步问题/">ajaix异步问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href="/2017/09/15/36CSS3动画/">CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href="/2017/08/23/14基于Vue2.0实现后台系统权限控制/">基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href="/2017/08/15/31DOM/">DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2017/06/15/1Git 简单使用说明 /">Git 简单使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/15</span><a class="archive-post-title" href="/2017/05/15/25Http/">Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href="/2017/04/15/8iconfont字体图片/">iconfont图片使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2017/03/15/18移动端300ms点击延迟和点击穿透/">移动端300ms点击延迟和点击穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2017/02/07/18引用类型/">引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href="/2017/01/21/16操作DOM常用API总结/">DOM常见API</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href="/2016/12/19/21JSON格式/">JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href="/2016/12/09/30事件/">JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2016/11/01/28常用标签样式重置/">标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href="/2016/10/19/2伪类、伪元素使用说明/">伪类、伪元素使用说明</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+

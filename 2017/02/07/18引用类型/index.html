@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>引用类型 · bigdeal&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180226" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css?v=20180226" media="(max-width: 980px)">
+    <link rel="icon" href="/assets/favicon.ico">
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">bigdeal&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">引用类型</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">bigdeal's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            引用类型
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/02/07</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>在 <code>ECMAScript</code> 中，引用类型是一种数据结构，用于将数据和功能组织在一起。它也常被称作类。有时候也被成为<strong>对象定义</strong>，因为他们描述的是一类对象所具有的属性和方法。<br>如前所述，对象是某个特定引用类型的实例。</p>
+<h2 id="object-类型"><a href="#object-类型" class="headerlink" title="object 类型"></a>object 类型</h2><ul>
+<li>一般来说，访问对象属性有点表示法和方括号两种方法。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alert(person[<span class="string">'name'</span>]) <span class="comment">//'James'</span></span><br><span class="line">alert(person.name)    <span class="comment">//'James'</span></span><br></pre></td></tr></table></figure>
+<p>这两种方式访问对象属性没有任何区别，但方括号可以通过<strong>变量</strong>访问属性；如果属性明中国年包含空格等可能导致语法错误的字符，或者属性名使用的是<strong>关键字或保留字</strong>，也可以使用方括号正确表达。</p>
+<h2 id="Array类型"><a href="#Array类型" class="headerlink" title="Array类型"></a>Array类型</h2><ul>
+<li>数组的 length 属性并不是只读的。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> color = [<span class="string">'red'</span>,<span class="string">'blue'</span>,<span class="string">'green'</span>]</span><br><span class="line">color.length = <span class="number">4</span></span><br><span class="line">alert(color[<span class="number">3</span>]) <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>利用 length 属性可以方便的添加末尾项。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">color[color.length] = <span class="string">'black'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>当设置超过数组长度的数组项时候，数组长度会被重新计算，空的数组项变成了<code>undefined</code>.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">color[<span class="number">99</span>] = <span class="string">'brown'</span></span><br><span class="line">alert(color.length)  <span class="comment">//100</span></span><br></pre></td></tr></table></figure>
+<h3 id="检测数组"><a href="#检测数组" class="headerlink" title="检测数组"></a>检测数组</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.isArray()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>instanceof</code> 操作符的问题在于，它假定只有一个全局执行环境。如果网页中包含多个框架，实际就存在两个以上不同的全局执行环境，从而存在两个以上的不同版本的 <code>Array</code> 构造函数。</li>
+</ul>
+<h3 id="栈方法和队列方法"><a href="#栈方法和队列方法" class="headerlink" title="栈方法和队列方法"></a>栈方法和队列方法</h3><ul>
+<li><code>push()</code>方法可以接受<strong>任意数量</strong>的参数，把他们逐个添加到数组末尾，并返回修改后的数组长度。</li>
+<li><code>pop()</code>方法则从数组末尾移走最后一项，减少数组 length，同时返回移除的项。</li>
+<li><code>shift()</code>方法移除数组中的第一项并返回移除的数组项。</li>
+<li><code>unshift()</code>方法则从数组的前端添加<strong>任意多项</strong>，返回数组长度。</li>
+<li>由此可见：<code>push() unshift()</code>可以接受多项参数，<strong>返回的是数组长度 length</strong>；<code>pop() shift()</code>不接受参数，但是<strong>返回了一个添加项或者返回项</strong>。</li>
+<li><code>shift() push()</code>方法可以模拟队列的方式使用数组，后进前出。</li>
+<li><code>unshift() pop()</code>可以从相反方向模拟队列方法，前进后出。</li>
+</ul>
+<h3 id="重排序方法"><a href="#重排序方法" class="headerlink" title="重排序方法"></a>重排序方法</h3><ul>
+<li><code>reverse()</code>反转数组。</li>
+<li><code>sort()</code>默认情况下按升序排列，同时会调用数组项的<code>toString()</code>方法，即使数组中都是数字，<strong>比较的也是字符串</strong>，所以常常出现10在5前这种情况。因此默认方法通常不用。</li>
+</ul>
+<p>以上两种返回的都是排序后的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compare</span>(<span class="params">v1, v2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v2-v1</span><br><span class="line">&#125;</span><br><span class="line">[<span class="number">9</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>].sort(compare)  <span class="comment">//返回的数组即可按升序排列</span></span><br></pre></td></tr></table></figure>
+<h3 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h3><ul>
+<li><code>concat()</code>方法没有参数时只会返回复制的数组，有了参数后会返回添加参数后的数组。</li>
+<li><code>slice()</code> 方法接受两个参数，起始位置和结束位置。第二个参数可不传。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> color = [<span class="string">'red'</span>,<span class="string">'blue'</span>,<span class="string">'green'</span>,<span class="string">'black'</span>,<span class="string">'brown'</span>]</span><br><span class="line"><span class="keyword">var</span> color2 = color.slice(<span class="number">1</span>,<span class="number">4</span>)</span><br><span class="line">alert(color2)   <span class="comment">//['blue','green','black']注意这个地方切到了4前</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>splice()</code>方法主要用来向数组中部插入项，一般是三种方式:</li>
+<li>删除 : <code>splice(0，2)</code>要删除的位置和项数。</li>
+<li>插入 :<code>splice(2,0,&#39;red&#39;,&#39;brown&#39;)</code>在位置2，插入两项。</li>
+<li>替换 : <code>splice(2,1,&#39;red&#39;,&#39;brown&#39;)</code>在位置2删除一项，并插入两项。</li>
+</ul>
+<h3 id="位置方法"><a href="#位置方法" class="headerlink" title="位置方法"></a>位置方法</h3><ul>
+<li><code>indexOf()和 lastIndexOf()</code> 接受两个参数：要查找的项和起始位置(可选)。</li>
+<li>只不过一个是从正向开始查找，另一个是从数组末尾开始，但是他们返回的<strong>都是找到的项的位置</strong>。</li>
+</ul>
+<h3 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h3><ul>
+<li><code>every()和 some()</code>返回的是布尔值，表示是否满足某个条件。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> everyResult = color.every(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (item &gt; <span class="number">2</span>)</span><br><span class="line">&#125; </span><br><span class="line">alert(everyResult)		 <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>filter()</code>返回的是符合条件判断的数组。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> filterResult = color.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (item &gt; <span class="number">2</span>)</span><br><span class="line">&#125; </span><br><span class="line">alert(filterResult) 	<span class="comment">//[3,5,4,6]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>map()</code>方法返回一个对数组的对应项进行操作后的数组。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mapResult = color.map(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (item * <span class="number">2</span>)</span><br><span class="line">&#125; </span><br><span class="line">alert(mapResult) <span class="comment">//[2,4,6,8,10]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>forEach()</code>直接对数组进行操作，类似 for 循环。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">color.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,array</span>) </span>&#123;</span><br><span class="line">   <span class="comment">//进行某些操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="归并方法"><a href="#归并方法" class="headerlink" title="归并方法"></a>归并方法</h3><ul>
+<li><code>reduce() 和reduceRight()</code> 迭代所有项，返回一个最终值。一个正向迭代，一个从数组末尾向前开始。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reduceResult = color.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,next,index,array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> pre + next</span><br><span class="line">&#125; </span><br><span class="line">alert(reduceResult) <span class="comment">// 所有项想加的结果：15</span></span><br></pre></td></tr></table></figure>
+<h2 id="Function-类型"><a href="#Function-类型" class="headerlink" title="Function 类型"></a>Function 类型</h2><ul>
+<li>函数名实际上是一个指向函数对象的指针，不会与某个函数绑定。</li>
+<li>函数声明和函数表达式是有区别的，解析器在代码执行之前，函数声明已经提升，而<strong>函数表达式只有执行到它所在的代码行，才会真正解释执行</strong>。</li>
+</ul>
+<h3 id="函数内部属性"><a href="#函数内部属性" class="headerlink" title="函数内部属性"></a>函数内部属性</h3><ul>
+<li>函数内部有两个特殊的对象<code>arguments 和 this</code>。</li>
+<li><code>arguments</code>主要用来保存函数参数，还有一个<code>callee</code>属性，是一个指针，只想拥有这个 <code>arguments</code> 对象的函数。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(num &lt; <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> num * factorial(num <span class="number">-1</span>)</span><br><span class="line">&#125;    <span class="comment">//阶乘函数经典形式   问题在于过度紧密耦合了 factorial 函数名</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(num &lt; <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> num * <span class="built_in">arguments</span>.callee(num <span class="number">-1</span>)</span><br><span class="line">&#125; <span class="comment">//使用自身函数指针  arguments.callee 替代了函数名，解耦</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数属性和方法"><a href="#函数属性和方法" class="headerlink" title="函数属性和方法"></a>函数属性和方法</h3><ul>
+<li>每个函数都有两个属性：<code>length 和 prototype</code>。其中 length 表示函数接受的参数个数，就引用类型而言，<strong>prototype 是保存他们所有实例方法的真正所在</strong>。例如<code>toString()和 valueOf()</code>等方法实际都保存在 prototype 中，只不过是通过各自对象的实例访问罢了。</li>
+<li>每个实例都包含两个非继承的方法<code>apply()和 call()</code>，实际上等于设置函数体内 this对象的值，真正强大的地方是能够扩充函数赖以运行的作用域。<code>call()</code>是分开接受参数，<code>apply()</code>是接受数组形式的参数。</li>
+<li>使用 <code>apply()和 call()</code>来扩充作用域的最大好处就是，对象不需要与方法有任何耦合关系。此外<code>bind()</code>也是如此。</li>
+</ul>
+<h2 id="单体内置对象"><a href="#单体内置对象" class="headerlink" title="单体内置对象"></a>单体内置对象</h2><h3 id="global-对象"><a href="#global-对象" class="headerlink" title="global 对象"></a>global 对象</h3><ul>
+<li><code>encodeURI()</code>方法不会对本身属于 URI 的特殊字符进行编码，<code>：/ ? #</code>不会转义，会对空格转义。</li>
+<li><code>encodeURIComponent()</code>会对所有非标字符转义。</li>
+<li><strong>一般来说，<code>encodeURIComponent()</code>方法更常用，因为常见的是对查询字符串参数而不是对基础 URI 进行编码</strong>。</li>
+<li><code>decodeURIComponent()和decodeURI()</code> 是对应的对上述两种方法解码的方法，<strong>注意是分别对应，不可交换。</strong></li>
+<li><code>escape()</code>方法已废弃，实践中使用上述方法即可。</li>
+</ul>
+<h3 id="Math对象"><a href="#Math对象" class="headerlink" title="Math对象"></a>Math对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> max = <span class="built_in">Math</span>.max(<span class="number">3</span>,<span class="number">54</span>,<span class="number">32</span>,<span class="number">16</span>)   <span class="comment">//只能对分别的数字参数使用</span></span><br><span class="line">alert(Max)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> values = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]</span><br><span class="line"><span class="keyword">var</span> max = <span class="built_in">Math</span>.max.apply(<span class="built_in">Math</span>, values)</span><br><span class="line"><span class="comment">//这种方式即可对数组进行求最大值的正确姿势</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>random()</code>方法</li>
+</ul>
+<p>套用下面公式，即可从某个整数范围内随机选择一个值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">值 = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * 可能值的总数 + 第一个可能的值)</span><br><span class="line"></span><br><span class="line"><span class="comment">//从2到10之间选一个整数</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">9</span> + <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectNum</span>(<span class="params">lowerVal, upperVal</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> choiceVal = upperVal - lowerVal + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * choiceVal + lowerVal)</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num1 = selectNum(<span class="number">2</span>, <span class="number">10</span>)    <span class="comment">// 2到10之间选择一个整数</span></span><br></pre></td></tr></table></figure>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2017/03/15/18移动端300ms点击延迟和点击穿透/" title="移动端300ms点击延迟和点击穿透">
+                    <div class="nextTitle">移动端300ms点击延迟和点击穿透</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2017/01/21/16操作DOM常用API总结/" title="DOM常见API">
+                    <div class="prevTitle">DOM常见API</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    <!-- 
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:823719082@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/luwenchun" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+     -->
+    <div class="social">黑白中间还有灰，爱恨中间还有泪，你我之间还有谁？</div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#object-类型"><span class="toc-number">1.</span> <span class="toc-text">object 类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Array类型"><span class="toc-number">2.</span> <span class="toc-text">Array类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#检测数组"><span class="toc-number">2.1.</span> <span class="toc-text">检测数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈方法和队列方法"><span class="toc-number">2.2.</span> <span class="toc-text">栈方法和队列方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重排序方法"><span class="toc-number">2.3.</span> <span class="toc-text">重排序方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作方法"><span class="toc-number">2.4.</span> <span class="toc-text">操作方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位置方法"><span class="toc-number">2.5.</span> <span class="toc-text">位置方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代方法"><span class="toc-number">2.6.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并方法"><span class="toc-number">2.7.</span> <span class="toc-text">归并方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Function-类型"><span class="toc-number">3.</span> <span class="toc-text">Function 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数内部属性"><span class="toc-number">3.1.</span> <span class="toc-text">函数内部属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数属性和方法"><span class="toc-number">3.2.</span> <span class="toc-text">函数属性和方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单体内置对象"><span class="toc-number">4.</span> <span class="toc-text">单体内置对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#global-对象"><span class="toc-number">4.1.</span> <span class="toc-text">global 对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math对象"><span class="toc-number">4.2.</span> <span class="toc-text">Math对象</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 34 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/10</span><a class="archive-post-title" href="/2018/12/10/45前端进阶之路/">前端进阶之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/22</span><a class="archive-post-title" href="/2018/11/22/39新公司常见功能函数封装/">新公司常见功能函数封装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href="/2018/09/15/32call、apply、bind 的理解与实例/">call、apply、bind 的理解与实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href="/2018/08/29/37async 、await理解/">理解async/await</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href="/2018/08/08/20video的src不能播放/">VUE动态绑定audio/video的src不能播放</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2018/06/23/41性能优化方式/">性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2018/06/11/44与原生交互的常见方式/">与原生交互的常见方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href="/2018/05/19/6Linux 基础命令/">Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2018/05/02/12基于gulp的前端脚手架/">基于gulp的前端脚手架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2018/05/01/28前端自动化环境构建/">前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2018/05/01/21vue项目实现记住密码到cookie功能/">vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2018/04/21/33vue组件之间的数据传递/">vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href="/2018/03/29/27mongodb使用方法/">mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href="/2018/03/09/43简单实现VUE中的MVVM/">简单实现VUE中的MVVM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/42Javascript之闭包/">JavaScript之闭包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/25</span><a class="archive-post-title" href="/2017/12/25/26Express中间件/">Express中间件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href="/2017/11/16/38ajax异步问题/">ajaix异步问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href="/2017/09/15/36CSS3动画/">CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href="/2017/08/23/14基于Vue2.0实现后台系统权限控制/">基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href="/2017/08/15/31DOM/">DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2017/06/15/1Git 简单使用说明 /">Git 简单使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/15</span><a class="archive-post-title" href="/2017/05/15/25Http/">Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href="/2017/04/15/8iconfont字体图片/">iconfont图片使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2017/03/15/18移动端300ms点击延迟和点击穿透/">移动端300ms点击延迟和点击穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2017/02/07/18引用类型/">引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href="/2017/01/21/16操作DOM常用API总结/">DOM常见API</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href="/2016/12/19/21JSON格式/">JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href="/2016/12/09/30事件/">JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2016/11/01/28常用标签样式重置/">标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href="/2016/10/19/2伪类、伪元素使用说明/">伪类、伪元素使用说明</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+

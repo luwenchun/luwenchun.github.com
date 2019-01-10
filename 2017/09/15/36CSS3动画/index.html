@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CSS3 动画 · bigdeal&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180226" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css?v=20180226" media="(max-width: 980px)">
+    <link rel="icon" href="/assets/favicon.ico">
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">bigdeal&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">CSS3 动画</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">bigdeal's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            CSS3 动画
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/09/15</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p> CSS3 可以实现动画，代替原来的 Flash 和 JavaScript 方案。</p>
+<p> css动画分为CSS Transition和 CSS Animation</p>
+<h3 id="CSS-Transition"><a href="#CSS-Transition" class="headerlink" title="CSS Transition"></a>CSS Transition</h3><h3 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h3><p>语法</p>
+<pre><code>transition： CSS属性，花费时间，效果曲线(默认ease)，延迟时间(默认0)
+/*宽度从原始值到制定值的一个过渡，运动曲线ease,运动时间0.5秒，0.2秒后执行过渡*/
+transition：width,.5s,ease,.2s
+/*所有属性从原始值到制定值的一个过渡，运动曲线ease,运动时间0.5秒*/
+transition：all,.5s
+</code></pre><p> 上面栗子是简写模式，也可以分开写各个属性（这个在下面就不再重复了）</p>
+<pre><code>transition-property: width;
+transition-duration: 1s;
+transition-timing-function: linear;
+transition-delay: 2s;
+</code></pre><h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p>动画这个平常用的也很多，主要是做一个预设的动画。和一些页面交互的动画效果，结果和过渡应该一样，让页面不会那么生硬！</p>
+<p>语法</p>
+<pre><code>animation：动画名称，一个周期花费时间，运动曲线（默认ease），动画延迟（默认0），播放次数（默认1），是否反向播放动画（默认normal），是否暂停动画（默认running）
+
+/*执行一次logo2-line动画，运动时间2秒，运动曲线为 linear*/
+animation: logo2-line 2s linear;
+/*2秒后开始执行一次logo2-line动画，运动时间2秒，运动曲线为 linear*/
+animation: logo2-line 2s linear 2s;
+/*无限执行logo2-line动画，每次运动时间2秒，运动曲线为 linear，并且执行反向动画*/
+animation: logo2-line 2s linear alternate infinite;
+animation-fill-mode : none | forwards | backwards | both;
+/*none：不改变默认行为。    
+forwards ：当动画完成后，保持最后一个属性值（在最后一个关键帧中定义）。    
+backwards：在 animation-delay 所指定的一段时间内，在动画显示之前，应用开始属性值（在第一个关键帧中定义）。 
+both：向前和向后填充模式都被应用。  */      
+</code></pre><h3 id="logo展示动画"><a href="#logo展示动画" class="headerlink" title="logo展示动画"></a>logo展示动画</h3><p><img src="https://user-gold-cdn.xitu.io/2017/11/15/15fbf406b0855a99?imageslim" alt="你看"></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;reset.css&quot;&gt;
+&lt;/head&gt;
+&lt;style&gt;
+.logo-box{
+    width: 600px;
+    margin: 100px auto;
+    font-size: 0;
+    position: relative;
+}
+.logo-box div{
+    display: inline-block;
+}
+.logo-box .logo-text{
+    margin-left: 10px;
+}
+.logo-box .logo1{
+    animation: logo1 1s ease-in 2s;
+    animation-fill-mode:backwards;
+}
+.logo-box .logo-text{
+    animation: logoText 1s ease-in 3s;
+    animation-fill-mode:backwards;
+}
+.logo-box .logo2{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    animation: logo2-middle 2s ease-in;
+}
+.logo-box .logo2 img{
+    animation: logo2-line 2s linear;
+}
+@keyframes logo1 {
+    0%{
+        transform:rotate(180deg);
+        opacity: 0;
+    }
+    100%{
+        transform:rotate(0deg);
+        opacity: 1;
+    }
+}
+@keyframes logoText {
+    0%{
+        transform:translateX(30px);
+        opacity: 0;
+    }
+    100%{
+        transform:translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes logo2-line {
+    0% { transform: translateX(200px)}
+    25% { transform: translateX(150px)}
+    50% { transform: translateX(100px)}
+    75% { transform: translateX(50px)}
+    100% { transform: translateX(0); }
+}
+
+@keyframes logo2-middle {
+    0% { transform: translateY(0);     }
+    25% { transform: translateY(-100px);     }
+    50% { transform: translateY(0);     }
+    75% { transform: translateY(-50px);     }
+    100% { transform: translateY(0); }
+}
+&lt;/style&gt;
+&lt;body&gt;
+&lt;div class=&quot;logo-box&quot;&gt;
+&lt;div class=&quot;logo1&quot;&gt;&lt;img src=&quot;logo1.jpg&quot;/&gt;&lt;/div&gt;
+&lt;div class=&quot;logo2&quot;&gt;&lt;img src=&quot;logo2.jpg&quot;/&gt;&lt;/div&gt;
+&lt;div class=&quot;logo-text&quot;&gt;&lt;img src=&quot;logo3.jpg&quot;/&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;wraper&quot;&gt;&lt;div class=&quot;item&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>下面让大家看一个专业级别的<br><img src="https://user-gold-cdn.xitu.io/2017/11/15/15fbf406a3af6c0a?imageslim" alt="你看"></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;style&gt;
+    body {
+        font-family: Arial,&quot;Helvetica Neue&quot;,Helvetica,sans-serif;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .center {
+        margin: 80px auto;
+    }
+
+    .so {
+        display: block;
+        width: 500px;
+        height: 156px;
+        background: #ffffff;
+    }
+    .so .inner {
+        width: 500px;
+        height: 156px;
+        position: absolute;
+    }
+    .so .inner * {
+        position: absolute;
+        animation-iteration-count: infinite;
+        animation-duration: 3.5s;
+    }
+    .so .inner .name {
+        position: absolute;
+        font-size: 54px;
+        left: 130px;
+        top: 95px;
+    }
+    .so .inner .name .b {
+        font-weight: bold;
+    }
+    .so .inner .stack-box {
+        top: 100px;
+        width: 115px;
+        height: 56px;
+    }
+    .so .inner .box {
+        width: 115px;
+        height: 56px;
+        left: 0px;
+    }
+    .so .inner .box div {
+        background: #BCBBBB;
+    }
+    .so .inner .box .bottom {
+        bottom: 0px;
+        left: 0px;
+        width: 115px;
+        height: 12px;
+    }
+    .so .inner .box .left {
+        bottom: 11px;
+        left: 0px;
+        width: 12px;
+        height: 34px;
+    }
+    .so .inner .box .right {
+        bottom: 11px;
+        left: 103px;
+        width: 12px;
+        height: 34px;
+    }
+    .so .inner .box .top {
+        top: 0px;
+        left: 0px;
+        width: 0;
+        height: 12px;
+    }
+    .so .inner .stack {
+        left: 22px;
+        top: 22px;
+    }
+    .so .inner .stack .inner-item {
+        background: #F48024;
+        width: 71px;
+        height: 12px;
+    }
+    .so .inner .stack .item {
+        transition: transform 0.3s;
+        width: 291px;
+    }
+    .so .inner .stack div:nth-child(1) {
+        transform: rotate(0deg);
+    }
+    .so .inner .stack div:nth-child(2) {
+        transform: rotate(12deg);
+    }
+    .so .inner .stack div:nth-child(3) {
+        transform: rotate(24deg);
+    }
+    .so .inner .stack div:nth-child(4) {
+        transform: rotate(36deg);
+    }
+    .so .inner .stack div:nth-child(5) {
+        transform: rotate(48deg);
+    }
+    .so .inner .box {
+        animation-name: box;
+    }
+    .so .inner .box .top {
+        animation-name: box-top;
+    }
+    .so .inner .box .left {
+        animation-name: box-left;
+    }
+    .so .inner .box .right {
+        animation-name: box-right;
+    }
+    .so .inner .box .bottom {
+        animation-name: box-bottom;
+    }
+    .so .inner .stack-box {
+        animation-name: stack-box;
+    }
+    .so .inner .stack {
+        animation-name: stack;
+    }
+    .so .inner .stack .inner-item {
+        animation-name: stack-items;
+    }
+    .so .inner .stack .item:nth-child(1) {
+        animation-name: stack-item-1;
+    }
+    .so .inner .stack .item:nth-child(2) {
+        animation-name: stack-item-2;
+    }
+    .so .inner .stack .item:nth-child(3) {
+        animation-name: stack-item-3;
+    }
+    .so .inner .stack .item:nth-child(4) {
+        animation-name: stack-item-4;
+    }
+    .so .inner .stack .item:nth-child(5) {
+        animation-name: stack-item-5;
+    }
+    @keyframes stack {
+        0% {
+            left: 22px;
+        }
+        15% {
+            left: 22px;
+        }
+        30% {
+            left: 52px;
+        }
+        50% {
+            left: 52px;
+        }
+        80% {
+            left: 22px;
+        }
+    }
+    @keyframes stack-item-1 {
+        0% {
+            transform: rotate(12deg * 0);
+        }
+        10% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        54% {
+            transform: rotate(0deg);
+        }
+        92% {
+            transform: rotate(12deg * 0);
+        }
+    }
+    @keyframes stack-item-2 {
+        0% {
+            transform: rotate(12deg * 1);
+        }
+        10% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        54% {
+            transform: rotate(0deg);
+        }
+        92% {
+            transform: rotate(12deg * 1);
+        }
+    }
+    @keyframes stack-item-3 {
+        0% {
+            transform: rotate(12deg * 2);
+        }
+        10% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        54% {
+            transform: rotate(0deg);
+        }
+        92% {
+            transform: rotate(12deg * 2);
+        }
+    }
+    @keyframes stack-item-4 {
+        0% {
+            transform: rotate(12deg * 3);
+        }
+        10% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        54% {
+            transform: rotate(0deg);
+        }
+        92% {
+            transform: rotate(12deg * 3);
+        }
+    }
+    @keyframes stack-item-5 {
+        0% {
+            transform: rotate(12deg * 4);
+        }
+        10% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        54% {
+            transform: rotate(0deg);
+        }
+        92% {
+            transform: rotate(12deg * 4);
+        }
+    }
+    @keyframes stack-items {
+        0% {
+            width: 71px;
+        }
+        15% {
+            width: 71px;
+        }
+        30% {
+            width: 12px;
+        }
+        50% {
+            width: 12px;
+        }
+        80% {
+            width: 71px;
+        }
+    }
+    @keyframes box {
+        0% {
+            left: 0;
+        }
+        15% {
+            left: 0;
+        }
+        30% {
+            left: 30px;
+        }
+        50% {
+            left: 30px;
+        }
+        80% {
+            left: 0;
+        }
+    }
+    @keyframes box-top {
+        0% {
+            width: 0;
+        }
+        6% {
+            width: 0;
+        }
+        15% {
+            width: 115px;
+        }
+        30% {
+            width: 56px;
+        }
+        50% {
+            width: 56px;
+        }
+        59% {
+            width: 0;
+        }
+    }
+    @keyframes box-bottom {
+        0% {
+            width: 115px;
+        }
+        15% {
+            width: 115px;
+        }
+        30% {
+            width: 56px;
+        }
+        50% {
+            width: 56px;
+        }
+        80% {
+            width: 115px;
+        }
+    }
+    @keyframes box-right {
+        15% {
+            left: 103px;
+        }
+        30% {
+            left: 44px;
+        }
+        50% {
+            left: 44px;
+        }
+        80% {
+            left: 103px;
+        }
+    }
+    @keyframes stack-box {
+        0% {
+            transform: rotate(0deg);
+        }
+        30% {
+            transform: rotate(0deg);
+        }
+        40% {
+            transform: rotate(135deg);
+        }
+        50% {
+            transform: rotate(135deg);
+        }
+        83% {
+            transform: rotate(360deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+&lt;/style&gt;
+&lt;body&gt;
+&lt;div class=&quot;so center&quot;&gt;
+    &lt;div class=&quot;inner&quot;&gt;
+        &lt;div class=&quot;stack-box&quot;&gt;
+            &lt;div class=&quot;stack&quot;&gt;
+                &lt;div class=&quot;item&quot;&gt;
+                    &lt;div class=&quot;inner-item&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;item&quot;&gt;
+                    &lt;div class=&quot;inner-item&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;item&quot;&gt;
+                    &lt;div class=&quot;inner-item&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;item&quot;&gt;
+                    &lt;div class=&quot;inner-item&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;item&quot;&gt;
+                    &lt;div class=&quot;inner-item&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;box&quot;&gt;
+                &lt;div class=&quot;bottom&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;left&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;right&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;top&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;name&quot;&gt;
+            stack&lt;span class=&quot;b&quot;&gt;overflow&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>在CSS 3引入Transition（过渡）这个概念之前，CSS是没有时间轴的。也就是说，所有的状态变化，都是即时完成。</p>
+<pre><code>img{
+    height:15px;
+    width:15px;
+}
+
+img:hover{
+    height: 450px;
+    width: 450px;
+}
+</code></pre><p>transition的作用在于，指定状态变化所需要的时间。</p>
+<pre><code>img{
+    transition: 1s;
+}
+</code></pre><p>上面代码指定，图片放大的过程需要1秒，效果如下。</p>
+<p>我们还可以指定transition适用的属性，比如只适用于height。</p>
+<pre><code>img{
+    transition: 1s height;
+}
+</code></pre><p>这样一来，只有height的变化需要1秒实现，其他变化（主要是width）依然瞬间实现，效果如下。</p>
+<h4 id="transition-delay"><a href="#transition-delay" class="headerlink" title="transition-delay"></a>transition-delay</h4><p>在同一行transition语句中，可以分别指定多个属性。</p>
+<pre><code>img{
+    transition: 1s height, 1s width;
+}
+</code></pre><p>但是，这样一来，height和width的变化是同时进行的，跟不指定它们没有差别，效果如下。</p>
+<p>我们希望，让height先发生变化，等结束以后，再让width发生变化。实现这一点很容易，就是为width指定一个delay参数。</p>
+<pre><code>img{
+    transition: 1s height, 1s 1s width;
+}
+</code></pre><p>上面代码指定，width在1秒之后，再开始变化，也就是延迟（delay）1秒，效果如下。</p>
+<p>delay的真正意义在于，它指定了动画发生的顺序，使得多个不同的transition可以连在一起，形成复杂效果.</p>
+<h4 id="transition-timing-function"><a href="#transition-timing-function" class="headerlink" title="transition-timing-function"></a>transition-timing-function</h4><p>transition的状态变化速度（又称timing function），默认不是匀速的，而是逐渐放慢，这叫做ease。</p>
+<pre><code>img{
+    transition: 1s ease;
+}
+</code></pre><p>除了ease以外，其他模式还包括</p>
+<pre><code>（1）linear：匀速
+
+（2）ease-in：加速
+
+（3）ease-out：减速
+
+（4）cubic-bezier函数：自定义速度模式
+</code></pre><p>最后那个cubic-bezier，可以使用<a href="http://cubic-bezier.com/#.67,.21,.83,.67" target="_blank" rel="noopener">工具网站</a>来定制。</p>
+<pre><code>img{
+    transition: 1s height cubic-bezier(.83,.97,.05,1.44);
+}
+</code></pre><p>上面的代码会产生一个最后阶段放大过度、然后回缩的效果。</p>
+<h4 id="transition的各项属性"><a href="#transition的各项属性" class="headerlink" title="transition的各项属性"></a>transition的各项属性</h4><p>transition的完整写法如下。</p>
+<pre><code>img{
+    transition: 1s 1s height ease;
+}
+</code></pre><p>这其实是一个简写形式，可以单独定义成各个属性。</p>
+<pre><code>img{
+    transition-property: height;
+    transition-duration: 1s;
+    transition-delay: 1s;
+    transition-timing-function: ease;
+}
+</code></pre><h4 id="transition的使用注意"><a href="#transition的使用注意" class="headerlink" title="transition的使用注意"></a>transition的使用注意</h4><p>（1）目前，各大浏览器（包括IE 10）都已经支持无前缀的transition，所以transition已经可以很安全地不加浏览器前缀。</p>
+<p>（2）不是所有的CSS属性都支持transition，完整的列表查看这里，以及具体的效果。</p>
+<p>（3）transition需要明确知道，开始状态和结束状态的具体数值，才能计算出中间状态。比如，height从0px变化到100px，transition可以算出中间状态。但是，transition没法算出0px到auto的中间状态，也就是说，如果开始或结束的设置是height: auto，那么就不会产生动画效果。类似的情况还有，display: none到block，background: url(foo.jpg)到url(bar.jpg)等等。</p>
+<h4 id="transition的局限"><a href="#transition的局限" class="headerlink" title="transition的局限"></a>transition的局限</h4><p>transition的优点在于简单易用，但是它有几个很大的局限。</p>
+<p>（1）transition需要事件触发，所以没法在网页加载时自动发生。</p>
+<p>（2）transition是一次性的，不能重复发生，除非一再触发。</p>
+<p>（3）transition只能定义开始状态和结束状态，不能定义中间状态，也就是说只有两个状态。</p>
+<p>（4）一条transition规则，只能定义一个属性的变化，不能涉及多个属性。CSS Animation就是为了解决这些问题而提出的。</p>
+<h3 id="CSS-Animation"><a href="#CSS-Animation" class="headerlink" title="CSS Animation"></a>CSS Animation</h3><h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><p>首先，CSS Animation需要指定动画一个周期持续的时间，以及动画效果的名称。</p>
+<pre><code>div:hover {
+    animation: 1s rainbow;
+}
+</code></pre><p>上面代码表示，当鼠标悬停在div元素上时，会产生名为rainbow的动画效果，持续时间为1秒。为此，我们还需要用keyframes关键字，定义rainbow效果。</p>
+<pre><code>@keyframes rainbow {
+    0% { background: #c00; }
+    50% { background: orange; }
+    100% { background: yellowgreen; }
+}
+</code></pre><p>上面代码表示，rainbow效果一共有三个状态，分别为起始（0%）、中点（50%）和结束（100%）。如果有需要，完全可以插入更多状态。效果如下。</p>
+<p>默认情况下，动画只播放一次。加入infinite关键字，可以让动画无限次播放。</p>
+<pre><code>div:hover {
+    animation: 1s rainbow infinite;
+}
+</code></pre><p>也可以指定动画具体播放的次数，比如3次。</p>
+<pre><code>div:hover {
+    animation: 1s rainbow 3;
+}
+</code></pre><h4 id="animation-fill-mode"><a href="#animation-fill-mode" class="headerlink" title="animation-fill-mode"></a>animation-fill-mode</h4><p>动画结束以后，会立即从结束状态跳回到起始状态。如果想让动画保持在结束状态，需要使用animation-fill-mode属性。</p>
+<pre><code>div:hover {
+    animation: 1s rainbow forwards;
+}
+</code></pre><p>forwards表示让动画停留在结束状态。</p>
+<p>animation-fill-mode还可以使用下列值。</p>
+<pre><code>（1）none：默认值，回到动画没开始时的状态。
+
+（2）backwards：让动画回到第一帧的状态。
+
+（3）both: 根据animation-direction（见后）轮流应用forwards和backwards规则。
+</code></pre><h4 id="animation-direction"><a href="#animation-direction" class="headerlink" title="animation-direction"></a>animation-direction</h4><p>动画循环播放时，每次都是从结束状态跳回到起始状态，再开始播放。animation-direction属性，可以改变这种行为。</p>
+<p>下面看一个例子，来说明如何使用animation-direction。假定有一个动画是这样定义的。</p>
+<pre><code>@keyframes rainbow {
+    0% { background-color: yellow; }
+    100% { background: blue; }
+}
+</code></pre><p>默认情况是，animation-direction等于normal。</p>
+<pre><code>div:hover {
+    animation: 1s rainbow 3 normal;
+}
+</code></pre><p>此外，还可以等于取alternate、reverse、alternate-reverse等值。它们的含义见下图</p>
+<p>简单说，animation-direction指定了动画播放的方向，最常用的值是normal和reverse。浏览器对其他值的支持情况不佳，应该慎用。</p>
+<h4 id="animation的各项属性"><a href="#animation的各项属性" class="headerlink" title="animation的各项属性"></a>animation的各项属性</h4><p>同transition一样，animation也是一个简写形式。</p>
+<pre><code>div:hover {
+    animation: 1s 1s rainbow linear 3 forwards normal;
+}
+</code></pre><p>这是一个简写形式，可以分解成各个单独的属性。</p>
+<pre><code>div:hover {
+    animation-name: rainbow;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 1s;
+    animation-fill-mode:forwards;
+    animation-direction: normal;
+    animation-iteration-count: 3;
+}
+</code></pre><p><strong>animation-name</strong>对应到动画名称，<strong>animation-duration</strong>是动画时长，还有其他属性：</p>
+<pre><code>1. animation-timing-function：规定动画的速度曲线。默认是ease。
+2. animation-delay：规定动画何时开始。默认是 0。
+3. animation-iteration-count：规定动画被播放的次数。默认是 1。
+4. animation-direction：规定动画是否在下一周期逆向地播放。默认是normal。
+5. animation-play-state ：规定动画是否正在运行或暂停。默认是running。
+6. animation-fill-mode：规定动画执行之前和之后如何给动画的目标应用，默认是none，保留在最后一帧可以用forwards。
+</code></pre><h4 id="keyframes的写法"><a href="#keyframes的写法" class="headerlink" title="keyframes的写法"></a>keyframes的写法</h4><p>keyframes关键字用来定义动画的各个状态，它的写法相当自由。</p>
+<pre><code>@keyframes rainbow {
+    0% { background: #c00 }
+    50% { background: orange }
+    100% { background: yellowgreen }
+}
+</code></pre><p>0%可以用from代表，100%可以用to代表，因此上面的代码等同于下面的形式。</p>
+<pre><code>@keyframes rainbow {
+    from { background: #c00 }
+    50% { background: orange }
+    to { background: yellowgreen }
+}
+</code></pre><p>如果省略某个状态，浏览器会自动推算中间状态，所以下面都是合法的写法。</p>
+<pre><code>@keyframes rainbow {
+    50% { background: orange }
+    to { background: yellowgreen }
+}
+
+@keyframes rainbow {
+    to { background: yellowgreen }
+}
+</code></pre><p>甚至，可以把多个状态写在一行。</p>
+<pre><code>@keyframes pound {
+    from，to { transform: none; }
+    50% { transform: scale(1.2); }
+}
+</code></pre><p>另外一点需要注意的是，浏览器从一个状态向另一个状态过渡，是平滑过渡。steps函数可以实现分步过渡</p>
+<pre><code>div:hover {
+    animation: 1s rainbow infinite steps(10);
+}
+</code></pre><h4 id="animation-play-state"><a href="#animation-play-state" class="headerlink" title="animation-play-state"></a>animation-play-state</h4><p>有时，动画播放过程中，会突然停止。这时，默认行为是跳回到动画的开始状态</p>
+<p>上面动画中，如果鼠标移走，色块立刻回到动画开始状态。</p>
+<p>如果想让动画保持突然终止时的状态，就要使用animation-play-state属性。</p>
+<pre><code>div {
+    animation: spin 1s linear infinite;
+    animation-play-state: paused;
+}
+
+div:hover {
+    animation-play-state: running;
+}
+</code></pre><p>上面的代码指定，没有鼠标没有悬停时，动画状态是暂停；一旦悬停，动画状态改为继续播放。效果如下</p>
+<h4 id="浏览器前缀"><a href="#浏览器前缀" class="headerlink" title="浏览器前缀"></a>浏览器前缀</h4><p>目前，IE 10和Firefox（&gt;= 16）支持没有前缀的animation，而chrome不支持，所以必须使用webkit前缀。</p>
+<p>也就是说，实际运用中，代码必须写成下面的样子。</p>
+<pre><code>div:hover {
+    -webkit-animation: 1s rainbow;
+    animation: 1s rainbow;  
+}
+
+@-webkit-keyframes rainbow {
+    0% { background: #c00; }
+    50% { background: orange; }
+    100% { background: yellowgreen; }
+}
+
+@keyframes rainbow {
+    0% { background: #c00; }
+    50% { background: orange; }
+    100% { background: yellowgreen; }
+}
+</code></pre><h2 id="CSS-的transition和animation有何区别？"><a href="#CSS-的transition和animation有何区别？" class="headerlink" title="CSS 的transition和animation有何区别？"></a>CSS 的transition和animation有何区别？</h2><p>首先transition和animation都可以做动效，从语义上来理解，transition是过渡，由一个状态过渡到另一个状态，比如高度100px过渡到200px；而animation是动画，即更专业做动效的，animation有帧的概念，可以设置关键帧keyframe，一个动画可以由多个关键帧多个状态过渡组成，另外animation也包含上面提到的多个属性。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2017/10/01/35BFC问题/" title="BFC">
+                    <div class="nextTitle">BFC</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2017/08/23/14基于Vue2.0实现后台系统权限控制/" title="基于Vue2.0实现后台系统权限控制">
+                    <div class="prevTitle">基于Vue2.0实现后台系统权限控制</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    <!-- 
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:823719082@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/luwenchun" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+     -->
+    <div class="social">黑白中间还有灰，爱恨中间还有泪，你我之间还有谁？</div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-Transition"><span class="toc-number">1.</span> <span class="toc-text">CSS Transition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过渡"><span class="toc-number">2.</span> <span class="toc-text">过渡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动画"><span class="toc-number">3.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#logo展示动画"><span class="toc-number">4.</span> <span class="toc-text">logo展示动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本用法"><span class="toc-number">4.1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transition-delay"><span class="toc-number">4.2.</span> <span class="toc-text">transition-delay</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transition-timing-function"><span class="toc-number">4.3.</span> <span class="toc-text">transition-timing-function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transition的各项属性"><span class="toc-number">4.4.</span> <span class="toc-text">transition的各项属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transition的使用注意"><span class="toc-number">4.5.</span> <span class="toc-text">transition的使用注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transition的局限"><span class="toc-number">4.6.</span> <span class="toc-text">transition的局限</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-Animation"><span class="toc-number">5.</span> <span class="toc-text">CSS Animation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本用法-1"><span class="toc-number">5.1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#animation-fill-mode"><span class="toc-number">5.2.</span> <span class="toc-text">animation-fill-mode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#animation-direction"><span class="toc-number">5.3.</span> <span class="toc-text">animation-direction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#animation的各项属性"><span class="toc-number">5.4.</span> <span class="toc-text">animation的各项属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#keyframes的写法"><span class="toc-number">5.5.</span> <span class="toc-text">keyframes的写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#animation-play-state"><span class="toc-number">5.6.</span> <span class="toc-text">animation-play-state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览器前缀"><span class="toc-number">5.7.</span> <span class="toc-text">浏览器前缀</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-的transition和animation有何区别？"><span class="toc-number"></span> <span class="toc-text">CSS 的transition和animation有何区别？</span></a>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 34 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/10</span><a class="archive-post-title" href="/2018/12/10/45前端进阶之路/">前端进阶之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/22</span><a class="archive-post-title" href="/2018/11/22/39新公司常见功能函数封装/">新公司常见功能函数封装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href="/2018/09/15/32call、apply、bind 的理解与实例/">call、apply、bind 的理解与实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href="/2018/08/29/37async 、await理解/">理解async/await</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href="/2018/08/08/20video的src不能播放/">VUE动态绑定audio/video的src不能播放</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2018/06/23/41性能优化方式/">性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2018/06/11/44与原生交互的常见方式/">与原生交互的常见方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href="/2018/05/19/6Linux 基础命令/">Linux 基础命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2018/05/02/12基于gulp的前端脚手架/">基于gulp的前端脚手架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2018/05/01/28前端自动化环境构建/">前端自动化构建环境的搭建</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2018/05/01/21vue项目实现记住密码到cookie功能/">vue项目实现记住密码到cookie功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2018/04/21/33vue组件之间的数据传递/">vue组件之间的数据传递及共享</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href="/2018/03/29/27mongodb使用方法/">mongodb常用操作指令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href="/2018/03/09/43简单实现VUE中的MVVM/">简单实现VUE中的MVVM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/42Javascript之闭包/">JavaScript之闭包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/25</span><a class="archive-post-title" href="/2017/12/25/26Express中间件/">Express中间件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href="/2017/11/16/38ajax异步问题/">ajaix异步问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href="/2017/09/15/36CSS3动画/">CSS3 动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href="/2017/08/23/14基于Vue2.0实现后台系统权限控制/">基于Vue2.0实现后台系统权限控制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href="/2017/08/15/31DOM/">DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2017/06/15/1Git 简单使用说明 /">Git 简单使用说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/15</span><a class="archive-post-title" href="/2017/05/15/25Http/">Ajax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href="/2017/04/15/8iconfont字体图片/">iconfont图片使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2017/03/15/18移动端300ms点击延迟和点击穿透/">移动端300ms点击延迟和点击穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2017/02/07/18引用类型/">引用类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href="/2017/01/21/16操作DOM常用API总结/">DOM常见API</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href="/2016/12/19/21JSON格式/">JSON格式详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href="/2016/12/09/30事件/">JS事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2016/11/01/28常用标签样式重置/">标签样式重置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href="/2016/10/19/2伪类、伪元素使用说明/">伪类、伪元素使用说明</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
