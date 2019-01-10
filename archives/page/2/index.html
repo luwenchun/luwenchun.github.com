@@ -291,28 +291,19 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href="/2018/05/01/28前端自动化环境构建/">
+            <a class="abstract-title" href="/2018/05/01/21vue项目实现记住密码到cookie功能/">
                 
-                    <span>前端自动化构建环境的搭建</span>
+                    <span>vue项目实现记住密码到cookie功能</span>
             </a>
             <div class="abstract-content">
-                Web前端使用工程化方式构建；
-   目前需要一些简单的功能：
-1. 版本控制
-6. 编译SASS
-2. 检查JS
-3. 图片合并
-4. 压缩CSS
-5. 压缩JS
-这些都是每个Web项目在构建、开发阶段需要做的事情。前端自动化构建环境可以把这些重复工作一次配置，多次重复执行，极大的提高开发效率。
-目前最知名的构建工具： Gulp、Grunt、NPM + Webpack；
-grunt是前端工程化的先驱
+                
+实现功能：1.记住密码勾选，点登陆时，将账号和密码保存到cookie，下次登陆自动显示到表单内 2.不勾选，点登陆时候则清空之前保存到cookie的值，下次登陆需要手动输入
 
-gulp更自然基于流的方式连接任务
+大体思路就是通过存/取/删cookie实现的；每次进入登录页，先去读取cookie，如果浏览器的cookie中有账号信息，就自动填充到登录框中，存cookie是在登录成功之后，判断当前用户是否勾选了记住密码，如果勾选了，则把账号信息存到cookie当中，效果图如上：
 
-Webpack最年轻，擅长用于依赖管理，配置稍较复杂
-
-推荐使用Gulp，Gulp基于nodejs中stream，效率更好语法更自然,不需要编写复杂...
+html代码
+&lt;div class=&quot;ms-login&quot;&gt;
+        &lt;el-form :model=...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -428,6 +419,34 @@ Object.defineProperty(object, &apos;test&apos;, {
     
     
         <article class="index-post">
+            <a class="abstract-title" href="/2018/01/09/22koa框架/">
+                
+                    <span>从头实现一个koa框架</span>
+            </a>
+            <div class="abstract-content">
+                看完之后甚是膜拜，决定收藏记录下，引用地址https://zhuanlan.zhihu.com/p/35040744
+笔者认为，理解koa，主要需要搞懂四条主线，其实也是实现koa的四个步骤，
+   分别是：
+1. 封装node http Server
+2. 构造resquest, response, context对象
+3. 中间件机制
+4. 错误处理
+主线一：封装node http Server: 从hello world说起首先，不考虑框架，如果使用原生http模块来实现一个返回hello world的后端app，代码如下：
+let http = require(&apos;htt...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/09</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href="/2018/01/09/34JAVASCRIPT对象/">
                 
                     <span>JavaScript创建对象和实现继承</span>
@@ -444,34 +463,6 @@ var person1 = new Person(‘Jiang’, ‘student’)
 var person2 = new Person(‘X’, ‘Doctor’)
 没有显示的创建对象，使用new来调用这个构造函数，使用new后会自动执行如下操作
 创建一个新对象...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/09</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href="/2018/01/09/22koa框架/">
-                
-                    <span>从头实现一个koa框架</span>
-            </a>
-            <div class="abstract-content">
-                看完之后甚是膜拜，决定收藏记录下，引用地址https://zhuanlan.zhihu.com/p/35040744
-笔者认为，理解koa，主要需要搞懂四条主线，其实也是实现koa的四个步骤，
-   分别是：
-1. 封装node http Server
-2. 构造resquest, response, context对象
-3. 中间件机制
-4. 错误处理
-主线一：封装node http Server: 从hello world说起首先，不考虑框架，如果使用原生http模块来实现一个返回hello world的后端app，代码如下：
-let http = require(&apos;htt...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -572,16 +563,19 @@ app.use((req, res,...
     
     
         <article class="index-post">
-            <a class="abstract-title" href="/2017/10/01/35BFC问题/">
+            <a class="abstract-title" href="/2017/10/01/31BOM/">
                 
-                    <span>BFC</span>
+                    <span>BOM</span>
             </a>
             <div class="abstract-content">
-                什么是BFCBFC全称是Block Formatting Context，即块格式化上下文。它是CSS2.1规范定义的，关于CSS渲染定位的一个概念。要明白BFC到底是什么，首先来看看什么是视觉格式化模型。
-视觉格式化模型视觉格式化模型定义了盒（Box）的生成，盒主要包括了块盒、行内盒、匿名盒（没有名字不能被选择器选中的盒）以及一些实验性的盒（未来可能添加到规范中）。盒的类型由display属性决定。
-块盒（block box）块盒有以下特性：
-1、当元素的CSS属性display为block，list-item或 table时，它是块级元素 block-level；
-2、视觉上呈现为块...
+                BOM对象window对象
+BOM的核心是window，它表示浏览器的一个实例。window 对象既是通过 js 访问浏览器窗口的一个接口，又是 es 规定的Global 对象。
+全局变量不能通过 delete 操作符删除，但是 window 对象上的属性是可以的。
+直接访问为未声明的变量会报错，但是可以通过 window对象上的属性来查询某个未声明的变量是否存在。
+
+12var newValue = oldValue  //会抛出错误，因为后者未声明var newValue = window.oldValue  // undefined
+间歇调用和超时调用
+JS 是单线程语言，但它允许...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -1169,6 +1163,14 @@ app.use((req, res,...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
@@ -1251,12 +1253,12 @@ app.use((req, res,...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
         </li>
     
     
@@ -1285,12 +1287,12 @@ app.use((req, res,...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
         </li>
     
     
