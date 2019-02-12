@@ -377,19 +377,16 @@ app.use((req, res,...
     
     
         <article class="index-post">
-            <a class="abstract-title" href="/2017/10/01/31BOM/">
+            <a class="abstract-title" href="/2017/10/01/35BFC问题/">
                 
-                    <span>BOM</span>
+                    <span>BFC</span>
             </a>
             <div class="abstract-content">
-                BOM对象window对象
-BOM的核心是window，它表示浏览器的一个实例。window 对象既是通过 js 访问浏览器窗口的一个接口，又是 es 规定的Global 对象。
-全局变量不能通过 delete 操作符删除，但是 window 对象上的属性是可以的。
-直接访问为未声明的变量会报错，但是可以通过 window对象上的属性来查询某个未声明的变量是否存在。
-
-12var newValue = oldValue  //会抛出错误，因为后者未声明var newValue = window.oldValue  // undefined
-间歇调用和超时调用
-JS 是单线程语言，但它允许...
+                什么是BFCBFC全称是Block Formatting Context，即块格式化上下文。它是CSS2.1规范定义的，关于CSS渲染定位的一个概念。要明白BFC到底是什么，首先来看看什么是视觉格式化模型。
+视觉格式化模型视觉格式化模型定义了盒（Box）的生成，盒主要包括了块盒、行内盒、匿名盒（没有名字不能被选择器选中的盒）以及一些实验性的盒（未来可能添加到规范中）。盒的类型由display属性决定。
+块盒（block box）块盒有以下特性：
+1、当元素的CSS属性display为block，list-item或 table时，它是块级元素 block-level；
+2、视觉上呈现为块...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -404,16 +401,19 @@ JS 是单线程语言，但它允许...
     
     
         <article class="index-post">
-            <a class="abstract-title" href="/2017/10/01/35BFC问题/">
+            <a class="abstract-title" href="/2017/10/01/31BOM/">
                 
-                    <span>BFC</span>
+                    <span>BOM</span>
             </a>
             <div class="abstract-content">
-                什么是BFCBFC全称是Block Formatting Context，即块格式化上下文。它是CSS2.1规范定义的，关于CSS渲染定位的一个概念。要明白BFC到底是什么，首先来看看什么是视觉格式化模型。
-视觉格式化模型视觉格式化模型定义了盒（Box）的生成，盒主要包括了块盒、行内盒、匿名盒（没有名字不能被选择器选中的盒）以及一些实验性的盒（未来可能添加到规范中）。盒的类型由display属性决定。
-块盒（block box）块盒有以下特性：
-1、当元素的CSS属性display为block，list-item或 table时，它是块级元素 block-level；
-2、视觉上呈现为块...
+                BOM对象window对象
+BOM的核心是window，它表示浏览器的一个实例。window 对象既是通过 js 访问浏览器窗口的一个接口，又是 es 规定的Global 对象。
+全局变量不能通过 delete 操作符删除，但是 window 对象上的属性是可以的。
+直接访问为未声明的变量会报错，但是可以通过 window对象上的属性来查询某个未声明的变量是否存在。
+
+12var newValue = oldValue  //会抛出错误，因为后者未声明var newValue = window.oldValue  // undefined
+间歇调用和超时调用
+JS 是单线程语言，但它允许...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -1152,19 +1152,62 @@ xhr.send(...
     
     
     
-    <div class="total-archive"> Total : 34 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 38 </div>
     
     <div class="post-archive">
     
     
     
     
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span><a class="archive-post-title" href="/2019/01/15/48JS总结/">JS想关汇总</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href="/2019/01/10/47React v16.3之后的生命周期/">React v16.3之后的生命周期</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">12/30</span><a class="archive-post-title" href="/2018/12/30/46深入理解前端流/">理解前端流</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">12/10</span><a class="archive-post-title" href="/2018/12/10/45前端进阶之路/">前端进阶之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href="/2018/11/23/40Vuex原理/">Vuex原理探索</a>
         </li>
     
     
@@ -1234,12 +1277,12 @@ xhr.send(...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/22koa框架/">从头实现一个koa框架</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href="/2018/01/09/34JAVASCRIPT对象/">JavaScript创建对象和实现继承</a>
         </li>
     
     
@@ -1268,12 +1311,12 @@ xhr.send(...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/31BOM/">BOM</a>
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href="/2017/10/01/35BFC问题/">BFC</a>
         </li>
     
     
